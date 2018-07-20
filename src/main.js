@@ -6,6 +6,9 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import i18n from "./i18n";
+import Gravatar from "vue-gravatar";
+
+Vue.component("v-gravatar", Gravatar);
 
 Vue.config.productionTip = false;
 
