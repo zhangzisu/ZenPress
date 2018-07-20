@@ -86,6 +86,11 @@ export default {
           icon: "home",
           title: "Home",
           link: "/"
+        },
+        {
+          icon: "help",
+          title: "About",
+          link: "/about"
         }
       ],
       admin_drawer_content: [
