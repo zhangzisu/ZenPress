@@ -1,3 +1,12 @@
 {
-  "message": "hello i18n !!"
+  "about_link": "About",
+  "actions": "Actions",
+  "admin": "Admin",
+  "blog_link": "Blog",
+  "blog_management": "Blogging",
+  "home_link": "Home",
+  "new_post": "New post",
+  "toggle_admin_panel": "Admin",
+  "user_profile": "User profile",
+  "user_profile_edit": "Edit profile"
 }

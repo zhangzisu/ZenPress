@@ -35,19 +35,19 @@
 			</v-toolbar>
 			<v-divider/>
 			<v-list>
-				<v-list-group v-for="item in admin_drawer_content" :key="item.title" :prepend-icon="item.icon">
+				<v-list-group v-for="item in admin_drawer_content" v-if="!item.disallowed" :key="item.title" :prepend-icon="item.icon">
 					<v-list-tile slot="activator">
 						<v-list-tile-content>
 							<v-list-tile-title v-text="$t(item.title)"/>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-list-group v-for="drawer in item.drawer" :key="drawer.title" no-action sub-group>
+					<v-list-group v-for="drawer in item.drawer" v-if="!drawer.disallowed" :key="drawer.title" no-action sub-group>
 						<v-list-tile slot="activator">
 							<v-list-tile-content>
 								<v-list-tile-title v-text="$t(drawer.title)"/>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-list-tile v-for="sub in drawer.subs" :key="sub.title" :to="sub.link">
+						<v-list-tile v-for="sub in drawer.subs" v-if="!sub.disallowed" :key="sub.title" :to="sub.link">
 							<v-list-tile-content>
 								<v-list-tile-title v-text="$t(sub.title)"/>
 							</v-list-tile-content>
@@ -84,12 +84,17 @@ export default {
       main_drawer_content: [
         {
           icon: "home",
-          title: "Home",
+          title: "home_link",
           link: "/"
         },
         {
+          icon: "subject",
+          title: "blog_link",
+          link: "/blog"
+        },
+        {
           icon: "help",
-          title: "About",
+          title: "about_link",
           link: "/about"
         }
       ],
@@ -115,6 +120,15 @@ export default {
           drawer: [
             {
               title: "actions",
+              subs: [
+                {
+                  title: "new_post",
+                  link: "/"
+                }
+              ]
+            },
+            {
+              title: "admin",
               subs: [
                 {
                   title: "new_post",
