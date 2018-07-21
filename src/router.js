@@ -1,8 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import home from "./views/home.vue";
-import about from "./views/about.vue";
-import blog from "./views/blog.vue";
+import * as views from "./views";
+import * as components from "./components";
 
 Vue.use(Router);
 
@@ -11,17 +10,23 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: home
+      component: views.home
     },
     {
       path: "/about",
       name: "about",
-      component: about
+      component: views.about
     },
     {
       path: "/blog",
       name: "blog",
-      component: blog
+      component: views.blog,
+      children: [
+        {
+          path: "",
+          component: components.blog_home
+        }
+      ]
     }
   ]
 });
