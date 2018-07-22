@@ -1,4 +1,6 @@
 import "@babel/polyfill";
+import "./assets/github-markdown.css";
+
 import Vue from "vue";
 import "./plugins/vuetify";
 import App from "./App.vue";

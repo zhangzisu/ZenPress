@@ -2,13 +2,27 @@
 	<v-app>
 		<!-- Main drawer -->
 		<v-navigation-drawer v-model="common_drawer" temporary fixed enable-resize-watcher app>
+			<v-toolbar flat>
+				<v-list class="pa-0">
+					<v-list-tile avatar>
+						<v-list-tile-avatar>
+							<v-gravatar :email="site.owner.email"/>
+						</v-list-tile-avatar>
+						<v-list-tile-content>
+							<v-list-tile-title v-text="site.owner.name"/>
+							<v-list-tile-sub-title v-text="site.owner.bio"/>
+						</v-list-tile-content>
+					</v-list-tile>
+				</v-list>
+			</v-toolbar>
+			<v-divider/>
 			<v-list>
-				<v-list-tile  v-for="(item, i) in main_drawer_content" :key="i" :to="item.link">
+				<v-list-tile  v-for="(item, i) in site.menu" :key="i" :to="item.link">
 					<v-list-tile-action>
 						<v-icon v-html="item.icon"/>
 					</v-list-tile-action>
 					<v-list-tile-content>
-						<v-list-tile-title v-text="$t(item.title)"/>
+						<v-list-tile-title v-text="item.title"/>
 					</v-list-tile-content>
 				</v-list-tile>
 			</v-list>
@@ -56,9 +70,11 @@
 				</v-list-group>
 			</v-list>
 		</v-navigation-drawer>
+
+		<!-- Main toolbar -->
 		<v-toolbar app>
 			<v-toolbar-side-icon @click.stop="common_drawer = !common_drawer"/>
-			<v-toolbar-title v-text="title"/>
+			<v-toolbar-title v-text="site.title"/>
 			<v-spacer/>
 			<v-btn flat @click.stop="admin_drawer = !admin_drawer">
 				{{ $t("toggle_admin_panel") }}
@@ -66,6 +82,20 @@
 		</v-toolbar>
 		<v-content>
 			<router-view/>
+
+			<!-- Querying -->
+			<v-dialog v-model="querying" hide-overlay persistent width="300">
+				<v-card>
+					<v-card-text>
+						{{ $t('wait_text') }}
+						<v-progress-linear indeterminate query/>
+					</v-card-text>
+				</v-card>
+			</v-dialog>
+			<!-- Error -->
+			<v-snackbar v-model="error_status" :timeout="3000" bottom right>
+				{{ $t('error') }}: {{ error_text }}
+			</v-snackbar>
 		</v-content>
 	</v-app>
 </template>
@@ -81,23 +111,6 @@ export default {
       username: "admin",
       useremail: "admin@zhangzisu.cn",
       userrole: "Administrator",
-      main_drawer_content: [
-        {
-          icon: "home",
-          title: "home_link",
-          link: "/"
-        },
-        {
-          icon: "subject",
-          title: "blog_link",
-          link: "/blog"
-        },
-        {
-          icon: "help",
-          title: "about_link",
-          link: "/about"
-        }
-      ],
       admin_drawer_content: [
         {
           icon: "account_circle",
@@ -140,6 +153,33 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    error_status: {
+      get: function() {
+        return this.$store.state.error_status;
+      },
+      set: function(value) {
+        this.$store.commit("error_status", value);
+      }
+    },
+    error_text: function() {
+      return this.$store.state.error_text;
+    },
+    querying: {
+      get: function() {
+        return this.$store.state.querying;
+      },
+      set: function(value) {
+        this.$store.commit("querying", value);
+      }
+    },
+    site: function() {
+      return this.$store.state.site;
+    }
+  },
+  created() {
+    this.$store.dispatch("loadSite");
   }
 };
 </script>
