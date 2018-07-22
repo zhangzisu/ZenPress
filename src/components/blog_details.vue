@@ -33,6 +33,7 @@
 					</v-card-text>
 					<v-card-actions>
 						<v-spacer/>
+						<v-btn v-if="authenticated" depressed @click="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
 					</v-card-actions>
 				</v-card>
 			</v-flex>
@@ -43,32 +44,52 @@
 <script>
 import marked from "marked";
 import DOMPurify from "dompurify";
-import user_banner from "./user_banner";
+import axios from "axios";
+
 export default {
   name: "blog_details",
-  components: {
-    "v-user": user_banner
-  },
   props: {
     post_id: String
   },
   data() {
     return {
       post: {
-        _id: "666",
-        title: "Test post",
-        subtitle: "Sub Title",
-        summary: "Summary",
-        content: "# Content\n\n`ddd`\n\n> 123",
-        tags: ["A", "B", "C"],
-        keywords: ["a", "b", "c"]
+        _id: "",
+        title: "",
+        subtitle: "",
+        summary: "",
+        content: "",
+        tags: [],
+        keywords: []
       }
     };
   },
+  computed: {
+    authenticated: function() {
+      return !!this.$store.state.authentication;
+    }
+  },
   methods: {
+    async fetch() {
+      try {
+        this.$store.commit("querying", true);
+        let result = await axios.get(`/blog/post/${this.post_id}`);
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        this.post = result.data;
+        this.$store.commit("querying", false);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
+    },
     render(markdown) {
       return DOMPurify.sanitize(marked(markdown));
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.fetch());
   }
 };
 </script>

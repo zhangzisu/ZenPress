@@ -29,25 +29,7 @@
 		</v-navigation-drawer>
 
 		<!-- Admin drawer -->
-		<v-navigation-drawer v-model="admin_drawer" temporary fixed app right>
-			<v-toolbar flat>
-				<v-list class="pa-0">
-					<v-list-tile avatar>
-						<v-list-tile-avatar>
-							<v-gravatar :email="useremail"/>
-						</v-list-tile-avatar>
-						<v-list-tile-content>
-							<v-list-tile-title>
-								{{ username }}
-							</v-list-tile-title>
-							<v-list-tile-sub-title>
-								{{ userrole }}
-							</v-list-tile-sub-title>
-						</v-list-tile-content>
-					</v-list-tile>
-				</v-list>
-			</v-toolbar>
-			<v-divider/>
+		<v-navigation-drawer v-if="authenticated" v-model="admin_drawer" temporary fixed app right>
 			<v-list>
 				<v-list-group v-for="item in admin_drawer_content" v-if="!item.disallowed" :key="item.title" :prepend-icon="item.icon">
 					<v-list-tile slot="activator">
@@ -76,7 +58,7 @@
 			<v-toolbar-side-icon @click.stop="common_drawer = !common_drawer"/>
 			<v-toolbar-title v-text="site.title"/>
 			<v-spacer/>
-			<v-btn flat @click.stop="admin_drawer = !admin_drawer">
+			<v-btn flat @click.stop="toggle_admin">
 				{{ $t("toggle_admin_panel") }}
 			</v-btn>
 		</v-toolbar>
@@ -136,7 +118,11 @@ export default {
               subs: [
                 {
                   title: "new_post",
-                  link: "/"
+                  link: "/admin/blog/new"
+                },
+                {
+                  title: "view_blogs",
+                  link: "/blog"
                 }
               ]
             },
@@ -176,10 +162,22 @@ export default {
     },
     site: function() {
       return this.$store.state.site;
+    },
+    authenticated: function() {
+      return !!this.$store.state.authentication;
     }
   },
   created() {
     this.$store.dispatch("loadSite");
+  },
+  methods: {
+    toggle_admin() {
+      if (this.authenticated) {
+        this.admin_drawer = !this.admin_drawer;
+      } else {
+        this.$router.push("/login");
+      }
+    }
   }
 };
 </script>

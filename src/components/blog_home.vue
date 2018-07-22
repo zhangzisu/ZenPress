@@ -22,28 +22,36 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "blog_home",
   data() {
     return {
-      posts: [
-        {
-          _id: 666,
-          title: "Title",
-          subtitle: "Subtitle",
-          summary: "Summary",
-          header_media: "https://i.loli.net/2018/07/15/5b4ab2458aa04.png"
-        }
-      ]
+      posts: []
     };
   },
   computed: {
     //
   },
   methods: {
-    fetchPost() {
-      //
+    async fetchPost() {
+      try {
+        this.$store.commit("querying", true);
+        let result = await axios.get("/blog");
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        this.posts = result.data;
+        this.$store.commit("querying", false);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.fetchPost());
   }
 };
 </script>

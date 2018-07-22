@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import store from "./store";
 import * as views from "./views";
 import * as components from "./components";
 
@@ -36,11 +37,27 @@ export default new Router({
       ]
     },
     {
+      path: "/login",
+      name: "login",
+      component: views.login,
+      beforeEnter: (to, from, next) => {
+        if (store.state.authentication) {
+          next("/");
+        } else {
+          next();
+        }
+      }
+    },
+    {
       path: "/admin",
       name: "admin",
       component: views.admin,
       beforeEnter: (to, from, next) => {
-        next();
+        if (store.state.authentication) {
+          next();
+        } else {
+          next("/login");
+        }
       },
       children: [
         {

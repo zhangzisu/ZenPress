@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
         bio: "administrator"
       }
     },
+    authentication: null,
     querying: false,
     error_status: false,
     error_text: ""
@@ -31,27 +33,48 @@ export default new Vuex.Store({
     },
     querying(state, value) {
       state.querying = value;
+    },
+    authenticate(state, value) {
+      state.authentication = value;
     }
   },
   actions: {
     async loadSite(context) {
-      context.commit("querying", true);
-      setTimeout(() => {
+      try {
+        context.commit("querying", true);
+        let result = await axios.get("/info");
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        context.commit("site", result.data);
         context.commit("querying", false);
-        context.commit("site", {
-          _id: 666,
-          title: "ZenPress ZhangZisu",
-          menu: [
-            { icon: "home", title: "home", link: "/" },
-            { icon: "subject", title: "blog", link: "/blog" }
-          ],
-          owner: {
-            name: "ZhangZisu",
-            email: "admin@zhangzisu.cn",
-            bio: "Bio"
-          }
-        });
-      }, 2000);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        context.commit("error_status", true);
+        context.commit("error_text", e.message);
+      }
+    },
+    async login(context, password) {
+      try {
+        context.commit("querying", true);
+        let result = await axios.post("/login", { password });
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        context.commit("authenticate", result.data);
+        context.commit("querying", false);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        context.commit("error_status", true);
+        context.commit("error_text", e.message);
+      }
+    },
+    async logout(context) {
+      try {
+        context.commit("authenticate", null);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        context.commit("error_status", true);
+        context.commit("error_text", e.message);
+      }
     }
   }
 });
