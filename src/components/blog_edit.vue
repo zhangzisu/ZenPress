@@ -22,11 +22,11 @@
 							<v-textarea v-model="post.content" :rules="[]" :label="$t('content')" height="500px" />
 						</v-card-text>
 						<v-card-actions>
-							<v-btn v-if="post.published === Number.MAX_SAFE_INTERGER" flat color="primary" v-text="$t('publish')"/>
-							<v-btn v-else flat>{{$t('published_at')}}: {{(new Date(post.published)).toLocaleString()}}</v-btn>
+							{{ formatDate(post.published) }}
+							<v-btn flat v-text="$t('modify')"/>
 							<v-spacer/>
-							<v-btn depressed color="secondary" v-text="$t('cancel')"/>
-							<v-btn depressed color="primary" v-text="$t('submit')"/>
+							<v-btn depressed color="secondary" @click="$router.go(-1)" v-text="$t('cancel')"/>
+							<v-btn depressed color="primary" @click="submit" v-text="$t('submit')"/>
 						</v-card-actions>
 					</v-card>
 				</v-form>
@@ -36,20 +36,26 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "blog_edit",
+  props: {
+    post_id: String
+  },
   data() {
     return {
       post: {
         _id: "",
+        site_id: "",
         title: "",
         subtitle: "",
         summary: "",
         header_media: "",
         content: "",
-        tags: ["123", "456", "789"],
+        tags: [],
         keywords: [],
-        published: "2018-07-16"
+        published: Number.MAX_SAFE_INTEGER,
+        topmost: false
       },
       valid: false,
       date: null,
@@ -60,7 +66,54 @@ export default {
   methods: {
     noEmpty(value) {
       return value.length > 0 || "Cannot be empty";
+    },
+    async fetch() {
+      try {
+        this.$store.commit("querying", true);
+        let result = await axios.get(`/blog/post/${this.post_id}`);
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        this.post = result.data;
+        this.$store.commit("querying", false);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
+    },
+    async submit() {
+      try {
+        this.$store.commit("querying", true);
+        if (this.post_id) {
+          let result = await axios.put(`/blog/post/${this.post_id}`, this.post);
+          if (result.status !== 200)
+            throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+          this.$store.commit("querying", false);
+          this.fetch();
+        } else {
+          let result = await axios.post("/blog/new", this.post);
+          if (result.status !== 200)
+            throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+          this.$store.commit("querying", false);
+          this.$router.push(`/admin/blog/edit/${result.data}`);
+        }
+      } catch (e) {
+        this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
+    },
+    formatDate(date) {
+      if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
+      return this.$t("published_at") + ": " + new Date(date).toLocaleString();
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (vm.post_id) {
+        vm.fetch();
+      }
+    });
   }
 };
 </script>

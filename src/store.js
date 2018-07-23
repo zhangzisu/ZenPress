@@ -59,6 +59,7 @@ export default new Vuex.Store({
         let result = await axios.post("/login", { password });
         if (result.status !== 200)
           throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        axios.defaults.headers.auth = result.data;
         context.commit("authenticate", result.data);
         context.commit("querying", false);
       } catch (e) {
@@ -70,6 +71,7 @@ export default new Vuex.Store({
     async logout(context) {
       try {
         context.commit("authenticate", null);
+        delete axios.defaults.headers.auth;
       } catch (e) {
         this.$store.commit("querying", false);
         context.commit("error_status", true);

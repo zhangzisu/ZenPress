@@ -3,7 +3,7 @@
 		<v-layout fill-height>
 			<v-flex>
 				<v-card v-for="(post, i) in posts" :key="i">
-					<v-card-media v-if="post.header_media" :src="post.header_media" height="200px"/>
+					<v-card-media v-if="post.header_media" :src="post.header_media" height="100px"/>
 					<v-card-title>
 						<div>
 							<div class="headline" v-text="post.title"/>
@@ -12,6 +12,7 @@
 					</v-card-title>
 					<v-card-text v-text="post.summary"/>
 					<v-card-actions>
+						{{ formatDate(post.published) }}
 						<v-spacer/>
 						<v-btn depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
 					</v-card-actions>
@@ -48,6 +49,10 @@ export default {
         this.$store.commit("error_status", true);
         this.$store.commit("error_text", e.message);
       }
+    },
+    formatDate(date) {
+      if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
+      return this.$t("published_at") + ": " + new Date(date).toLocaleString();
     }
   },
   beforeRouteEnter(to, from, next) {

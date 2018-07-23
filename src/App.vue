@@ -69,14 +69,14 @@
 			<v-dialog v-model="querying" hide-overlay persistent width="300">
 				<v-card>
 					<v-card-text>
-						{{ $t('wait_text') }}
+						{{ $t("wait_text") }}
 						<v-progress-linear indeterminate query/>
 					</v-card-text>
 				</v-card>
 			</v-dialog>
 			<!-- Error -->
 			<v-snackbar v-model="error_status" :timeout="3000" bottom right>
-				{{ $t('error') }}: {{ error_text }}
+				{{ $t("error") }}: {{ error_text }}
 			</v-snackbar>
 		</v-content>
 	</v-app>
@@ -121,7 +121,7 @@ export default {
                   link: "/admin/blog/new"
                 },
                 {
-                  title: "view_blogs",
+                  title: "view_posts",
                   link: "/blog"
                 }
               ]
@@ -130,8 +130,8 @@ export default {
               title: "admin",
               subs: [
                 {
-                  title: "new_post",
-                  link: "/"
+                  title: "manage_posts",
+                  link: "/admin/blog"
                 }
               ]
             }

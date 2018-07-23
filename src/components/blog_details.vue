@@ -3,6 +3,7 @@
 		<v-layout fill-height>
 			<v-flex>
 				<v-card>
+					<v-card-media v-if="post.header_media" :src="post.header_media" height="100px"/>
 					<v-card-title>
 						<div>
 							<div class="headline">{{ post.title }}</div>
@@ -32,6 +33,7 @@
 						</div>
 					</v-card-text>
 					<v-card-actions>
+						{{ formatDate(post.published) }}
 						<v-spacer/>
 						<v-btn v-if="authenticated" depressed @click="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
 					</v-card-actions>
@@ -58,9 +60,11 @@ export default {
         title: "",
         subtitle: "",
         summary: "",
+        header_media: "",
         content: "",
         tags: [],
-        keywords: []
+        keywords: [],
+        published: null
       }
     };
   },
@@ -86,6 +90,10 @@ export default {
     },
     render(markdown) {
       return DOMPurify.sanitize(marked(markdown));
+    },
+    formatDate(date) {
+      if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
+      return this.$t("published_at") + ": " + new Date(date).toLocaleString();
     }
   },
   beforeRouteEnter(to, from, next) {

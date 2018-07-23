@@ -76,7 +76,7 @@ export default new Router({
           path: "blog/edit/:id",
           component: components.blog_edit,
           props: function(route) {
-            return { id: route.params.id };
+            return { post_id: route.params.id };
           }
         }
       ]
