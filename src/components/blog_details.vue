@@ -98,6 +98,10 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.fetch());
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.fetch();
   }
 };
 </script>

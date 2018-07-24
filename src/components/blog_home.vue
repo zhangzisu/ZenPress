@@ -57,6 +57,10 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.fetchPost());
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.fetchPost();
   }
 };
 </script>

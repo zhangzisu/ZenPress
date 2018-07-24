@@ -70,9 +70,9 @@ export default {
     },
     async deletePost(id) {
       try {
-        if (confirm(`Delete post ${id}`)) {
+        if (confirm(`Delete post ${id} !`)) {
           this.$store.commit("querying", true);
-          let result = await axios.delete(`/blog/post/${this.post_id}`);
+          let result = await axios.delete(`/blog/post/${id}`);
           if (result.status !== 200)
             throw new Error(`HTTP Error ${result.status}: ${result.data}`);
           this.$store.commit("querying", false);
@@ -87,6 +87,10 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next(vm => vm.fetchPost());
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.fetchPost();
   }
 };
 </script>

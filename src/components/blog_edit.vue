@@ -114,6 +114,10 @@ export default {
         vm.fetch();
       }
     });
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.fetch();
   }
 };
 </script>
