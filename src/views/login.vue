@@ -2,7 +2,7 @@
 	<v-container>
 		<v-layout justify-center>
 			<v-flex md4>
-				<v-form v-model="valid">
+				<v-form v-model="valid" @submit="login">
 					<v-card>
 						<v-card-title>
 							<div>
@@ -43,8 +43,10 @@ export default {
       return (value && value.length > 0) || "Cannot be empty";
     },
     login() {
-      this.$store.dispatch("login", this.password);
-      this.$router.push("/");
+      if (this.valid) {
+        this.$store.dispatch("login", this.password);
+        this.$router.push("/");
+      }
     }
   }
 };

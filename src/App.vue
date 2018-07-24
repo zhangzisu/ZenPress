@@ -96,14 +96,35 @@ export default {
       admin_drawer_content: [
         {
           icon: "account_circle",
-          title: "user_profile",
+          title: "site_management",
           drawer: [
             {
               title: "actions",
               subs: [
                 {
-                  title: "user_profile_edit",
-                  link: "/"
+                  title: "view_stats",
+                  link: "/admin"
+                }
+              ]
+            },
+            {
+              title: "admin",
+              subs: [
+                {
+                  title: "edit_site_info",
+                  link: "/admin/site/info"
+                },
+                {
+                  title: "edit_site_menu",
+                  link: "/admin/site/menu"
+                },
+                {
+                  title: "edit_owner_info",
+                  link: "/admin/site/owner"
+                },
+                {
+                  title: "edit_password",
+                  link: "/admin/site/password"
                 }
               ]
             }
