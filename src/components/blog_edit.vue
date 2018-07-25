@@ -26,7 +26,25 @@
 						</v-card-text>
 						<v-card-actions>
 							{{ formatDate(post.published) }}
-							<v-btn flat v-text="$t('modify')"/>
+							<v-dialog v-model="dialog" width="500">
+								<v-btn slot="activator" flat v-text="$t('modify')"/>
+								<v-card>
+									<v-card-title class="headline" primary-title>
+										{{ $t('modify_published_time') }}
+									</v-card-title>
+
+									<v-card-text>
+										<v-text-field v-model="time" :label="$t('published_time_input_label')" :placeholder="$t('published_time_input_placeholder')"/>
+									</v-card-text>
+
+									<v-card-actions>
+										<v-btn flat @click="time = (new Date()).toLocaleString()" v-text="$t('now')"/>
+										<v-spacer/>
+										<v-btn flat @click="dialog = false" v-text="$t('cancel')"/>
+										<v-btn color="primary" flat @click="setPublished" v-text="$t('ok')"/>
+									</v-card-actions>
+								</v-card>
+							</v-dialog>
 							<v-spacer/>
 							<v-btn depressed color="secondary" @click="$router.go(-1)" v-text="$t('cancel')"/>
 							<v-btn depressed color="primary" @click="submit" v-text="$t('submit')"/>
@@ -62,11 +80,18 @@ export default {
         featured: false
       },
       valid: false,
-      date: null,
+      dialog: false,
       time: null
     };
   },
   computed: {},
+  watch: {
+    dialog: function(val) {
+      if (val) {
+        this.time = new Date(this.post.published).toLocaleString();
+      }
+    }
+  },
   methods: {
     noEmpty(value) {
       return value.length > 0 || "Cannot be empty";
@@ -112,7 +137,10 @@ export default {
       return this.$t("published_at") + ": " + new Date(date).toLocaleString();
     },
     setPublished() {
-      //
+      this.dialog = false;
+      let x = +new Date(this.time);
+      if (isNaN(x)) x = Number.MAX_SAFE_INTEGER;
+      this.post.published = x;
     }
   },
   beforeRouteEnter(to, from, next) {

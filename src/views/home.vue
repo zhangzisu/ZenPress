@@ -3,20 +3,19 @@
 		<v-slide-y-transition>
 			<v-layout>
 				<v-flex>
-					<v-card>
-						<v-card-media src="https://i.loli.net/2018/07/15/5b4ab2458aa04.png" height="100px"/>
+					<v-card v-for="(post, i) in posts" :key="i">
+						<v-card-media v-if="post.header_media" :src="post.header_media" height="100px"/>
 						<v-card-title>
 							<div>
-								<div class="headline">ZenPress</div>
-								<div class="subheading">Next blog platform</div>
+								<div class="headline" v-text="post.title"/>
+								<div class="subheading" v-text="post.subtitle"/>
 							</div>
 						</v-card-title>
-						<v-card-text>
-							<!--  -->
-						</v-card-text>
+						<v-card-text v-text="post.summary"/>
 						<v-card-actions>
+							{{ formatDate(post.published) }}
 							<v-spacer/>
-							<v-btn depressed color="primary">Read more</v-btn>
+							<v-btn depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
 						</v-card-actions>
 					</v-card>
 				</v-flex>
@@ -25,21 +24,42 @@
 	</v-container>
 </template>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>
+<script>
+import axios from "axios";
+
+export default {
+  name: "home",
+  data() {
+    return {
+      posts: []
+    };
+  },
+  methods: {
+    async fetchPost() {
+      try {
+        this.$store.commit("querying", true);
+        let result = await axios.get("/blog/featured");
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        this.posts = result.data;
+        this.$store.commit("querying", false);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
+    },
+    formatDate(date) {
+      if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
+      return this.$t("published_at") + ": " + new Date(date).toLocaleString();
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => vm.fetchPost());
+  },
+  beforeRouteUpdate(to, from, next) {
+    next();
+    this.fetchPost();
+  }
+};
+</script>
