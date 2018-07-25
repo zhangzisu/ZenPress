@@ -21,11 +21,11 @@ export default new Router({
     },
     {
       path: "/blog",
-      name: "blog",
       component: views.blog,
       children: [
         {
           path: "",
+          name: "blog",
           component: components.blog_home
         },
         {
@@ -51,7 +51,6 @@ export default new Router({
     },
     {
       path: "/admin",
-      name: "admin",
       component: views.admin,
       beforeEnter: (to, from, next) => {
         if (store.state.authentication) {
@@ -63,6 +62,7 @@ export default new Router({
       children: [
         {
           path: "",
+          name: "admin",
           component: components.admin_home
         },
         {

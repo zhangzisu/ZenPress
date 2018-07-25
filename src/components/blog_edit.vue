@@ -20,6 +20,9 @@
 							<v-divider/>
 							<v-textarea v-model="post.summary" :rules="[]" :label="$t('summary')" />
 							<v-textarea v-model="post.content" :rules="[]" :label="$t('content')" height="500px" />
+							<v-divider/>
+							<v-switch v-model="post.topmost" :label="$t('topmost')"/>
+							<v-switch v-model="post.featured" :label="$t('featured')"/>
 						</v-card-text>
 						<v-card-actions>
 							{{ formatDate(post.published) }}
@@ -55,7 +58,8 @@ export default {
         tags: [],
         keywords: [],
         published: Number.MAX_SAFE_INTEGER,
-        topmost: false
+        topmost: false,
+        featured: false
       },
       valid: false,
       date: null,
@@ -106,6 +110,9 @@ export default {
     formatDate(date) {
       if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
       return this.$t("published_at") + ": " + new Date(date).toLocaleString();
+    },
+    setPublished() {
+      //
     }
   },
   beforeRouteEnter(to, from, next) {
