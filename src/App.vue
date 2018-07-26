@@ -103,7 +103,7 @@ export default {
               subs: [
                 {
                   title: "view_stats",
-                  link: "/admin"
+                  link: "/admin/site"
                 }
               ]
             },

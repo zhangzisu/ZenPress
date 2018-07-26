@@ -5,7 +5,7 @@
 				<v-flex>
 					<v-card v-for="(post, i) in posts" :key="i">
 						<v-card-media v-if="post.header_media" :src="post.header_media" height="100px"/>
-						<v-card-title>
+						<v-card-title primary-title>
 							<div>
 								<div class="headline" v-text="post.title"/>
 								<div class="subheading" v-text="post.subtitle"/>

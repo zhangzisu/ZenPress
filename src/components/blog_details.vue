@@ -4,7 +4,7 @@
 			<v-flex>
 				<v-card>
 					<v-card-media v-if="post.header_media" :src="post.header_media" height="100px"/>
-					<v-card-title>
+					<v-card-title primary-title>
 						<div>
 							<div class="headline">{{ post.title }}</div>
 							<div class="subheading">{{ post.subtitle }}</div>

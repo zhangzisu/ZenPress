@@ -4,7 +4,7 @@
 			<v-flex md4>
 				<v-form v-model="valid" @submit="login">
 					<v-card>
-						<v-card-title>
+						<v-card-title primary-title>
 							<div>
 								<div class="headline" v-text="$t('login')"/>
 								<div class="subheading" v-text="title"/>

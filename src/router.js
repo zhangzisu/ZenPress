@@ -66,6 +66,26 @@ export default new Router({
           component: components.admin_home
         },
         {
+          path: "site",
+          component: components.site_statistics
+        },
+        {
+          path: "site/info",
+          component: components.site_info_edit
+        },
+        {
+          path: "site/menu",
+          component: components.site_menu_edit
+        },
+        {
+          path: "site/owner",
+          component: components.site_owner_edit
+        },
+        {
+          path: "site/password",
+          component: components.site_password_edit
+        },
+        {
           path: "blog",
           component: components.blog_list
         },

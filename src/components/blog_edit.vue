@@ -4,7 +4,7 @@
 			<v-flex>
 				<v-form v-model="valid">
 					<v-card>
-						<v-card-title>
+						<v-card-title primary-title>
 							<div>
 								<div class="headline" v-text="$t('edit')"/>
 								<div class="subheading" v-text="post._id"/>

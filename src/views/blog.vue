@@ -6,7 +6,7 @@
 			</v-flex>
 			<v-flex lg3>
 				<v-card>
-					<v-card-title>
+					<v-card-title primary-title>
 						<div>
 							<div class="headline">
 								Blog

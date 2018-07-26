@@ -3,7 +3,7 @@
 		<v-layout fill-height align-center>
 			<v-flex>
 				<v-card>
-					<v-card-title>
+					<v-card-title primary-title>
 						<div>
 							<div class="headline" v-text="$t(type)"/>
 							<div class="subheading" v-text="$t(summary)"/>
