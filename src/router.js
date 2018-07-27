@@ -66,6 +66,10 @@ export default new Router({
           component: components.admin_home
         },
         {
+          path: "logout",
+          component: components.logout
+        },
+        {
           path: "site",
           component: components.site_statistics
         },

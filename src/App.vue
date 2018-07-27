@@ -104,6 +104,10 @@ export default {
                 {
                   title: "view_stats",
                   link: "/admin/site"
+                },
+                {
+                  title: "logout",
+                  link: "/admin/logout"
                 }
               ]
             },
