@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tinymce/tinymce-vue": "^1.0.8",
     "axios": "^0.18.0",
     "dompurify": "^1.0.6",
     "highlight.js": "^9.12.0",

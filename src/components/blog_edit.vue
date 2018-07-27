@@ -18,8 +18,8 @@
 							<v-combobox v-model="post.tags" hide-selected label="Tags" multiple chips clearable/>
 							<v-combobox v-model="post.keywords" :items="post.content.split(' ')" hide-selected label="Keywords" multiple chips clearable/>
 							<v-divider/>
-							<v-textarea v-model="post.summary" :rules="[]" :label="$t('summary')" />
-							<v-textarea v-model="post.content" :rules="[]" :label="$t('content')" height="500px" />
+							<v-textarea v-model="post.summary" :rules="[]" :label="$t('summary')"/>
+							<editor :init="editor_config" v-model="post.content" api-key="meu59dobqbucphx214sgv3apbmcmxwqqoy1im80fsvnrujce"/>
 							<v-divider/>
 							<v-switch v-model="post.topmost" :label="$t('topmost')"/>
 							<v-switch v-model="post.featured" :label="$t('featured')"/>
@@ -59,8 +59,13 @@
 
 <script>
 import axios from "axios";
+import Editor from "@tinymce/tinymce-vue";
+
 export default {
   name: "blog_edit",
+  components: {
+    editor: Editor
+  },
   props: {
     post_id: String
   },
@@ -82,7 +87,10 @@ export default {
       },
       valid: false,
       dialog: false,
-      time: null
+      time: null,
+      editor_config: {
+        plugins: ["code", "wordcount", "spellchecker"]
+      }
     };
   },
   computed: {},

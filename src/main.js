@@ -15,8 +15,8 @@ import "./assets/github-markdown.css";
 import "./assets/github.css";
 
 Vue.component("v-gravatar", Gravatar);
-
 Vue.config.productionTip = false;
+axios.defaults.headers.auth = store.state.authentication;
 
 new Vue({
   router,
