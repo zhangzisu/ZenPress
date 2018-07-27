@@ -23,13 +23,13 @@
 											<v-icon>settings</v-icon>
 										</v-btn>
 										<v-list>
-											<v-list-tile>
+											<v-list-tile @click="deleteItem(id)">
 												<v-list-tile-title v-text="$t('delete')"/>
 											</v-list-tile>
-											<v-list-tile>
+											<v-list-tile @click="moveUpItem(id)">
 												<v-list-tile-title v-text="$t('move_up')"/>
 											</v-list-tile>
-											<v-list-tile>
+											<v-list-tile @click="moveDownItem(id)">
 												<v-list-tile-title v-text="$t('move_down')"/>
 											</v-list-tile>
 										</v-list>
@@ -92,6 +92,23 @@ export default {
     },
     syncData() {
       this.menu = this.$store.state.site.menu;
+    },
+    deleteItem(pos) {
+      if (pos < this.menu.length) {
+        this.menu.splice(pos, 1);
+      }
+    },
+    moveDownItem(pos) {
+      if (pos < this.menu.length - 1) {
+        let item = this.menu.splice(pos, 1)[0];
+        this.menu.splice(pos + 1, 0, item);
+      }
+    },
+    moveUpItem(pos) {
+      if (pos > 0) {
+        let item = this.menu.splice(pos, 1)[0];
+        this.menu.splice(pos - 1, 0, item);
+      }
     },
     newItem() {
       this.dialog = true;

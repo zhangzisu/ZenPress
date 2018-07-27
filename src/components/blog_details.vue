@@ -44,9 +44,21 @@
 </template>
 
 <script>
-import marked from "marked";
+import marked, { Renderer } from "marked";
+import highlightjs from "highlight.js";
 import DOMPurify from "dompurify";
 import axios from "axios";
+
+const renderer = new Renderer();
+renderer.code = (code, language) => {
+  const validLang = !!(language && highlightjs.getLanguage(language));
+  const highlighted = validLang
+    ? highlightjs.highlight(language, code).value
+    : code;
+  return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
+};
+
+marked.setOptions({ renderer });
 
 export default {
   name: "blog_details",

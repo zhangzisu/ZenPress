@@ -1,5 +1,4 @@
 import "@babel/polyfill";
-import "./assets/github-markdown.css";
 
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost/api/5b555bb77d8c4d384c0251d0";
@@ -12,6 +11,7 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import i18n from "./i18n";
 import Gravatar from "vue-gravatar";
+import "./assets/github-markdown.css";
 
 Vue.component("v-gravatar", Gravatar);
 
