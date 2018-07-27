@@ -59,7 +59,7 @@
 
 <script>
 import axios from "axios";
-import Editor from "@tinymce/tinymce-vue";
+import Editor from "vue2-ace-editor";
 
 export default {
   name: "blog_edit",
@@ -150,6 +150,14 @@ export default {
       let x = +new Date(this.time);
       if (isNaN(x)) x = Number.MAX_SAFE_INTEGER;
       this.post.published = x;
+    },
+    editorInit() {
+      require("brace/ext/language_tools"); //language extension prerequsite...
+      require("brace/mode/html");
+      require("brace/mode/javascript"); //language
+      require("brace/mode/less");
+      require("brace/theme/chrome");
+      require("brace/snippets/javascript"); //snippet
     }
   },
   beforeRouteEnter(to, from, next) {
