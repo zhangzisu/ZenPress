@@ -46,6 +46,7 @@
 								</v-card>
 							</v-dialog>
 							<v-spacer/>
+							<v-btn v-if="post_id" depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('view')"/>
 							<v-btn depressed color="secondary" @click="$router.go(-1)" v-text="$t('cancel')"/>
 							<v-btn depressed color="primary" @click="submit" v-text="$t('submit')"/>
 						</v-card-actions>

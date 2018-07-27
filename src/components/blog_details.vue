@@ -117,3 +117,32 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus">
+.markdown-body
+  box-shadow: none
+  overflow-x: auto
+  overflow-y: hidden
+  background: #2d2d2d
+  color: #fff
+pre, code
+  margin: 0
+  box-shadow: none
+  background: transparent
+  font-family: 'Inconsolata', monospace
+  font-weight: 300
+  font-size: 15px
+  line-height: 1.55
+code
+  position: relative
+  box-shadow: none
+  overflow-x: auto
+  overflow-y: hidden
+  word-break: break-word
+  flex-wrap: wrap
+  align-items: center
+  vertical-align: middle
+  white-space: pre-wrap
+  &:before
+    display: none
+</style>

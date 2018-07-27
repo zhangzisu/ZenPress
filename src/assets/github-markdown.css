@@ -619,6 +619,7 @@
   white-space: pre;
   background: transparent;
   border: 0;
+  box-shadow: none;
 }
 
 .markdown-body .highlight {

@@ -47,7 +47,7 @@ export default {
       return (str && str.length >= 0) || "Cannot be empty";
     },
     syncData() {
-      this.owner = this.$store.state.site.owner;
+      this.owner = Object.assign({}, this.$store.state.site.owner);
     },
     async submit() {
       try {

@@ -91,7 +91,7 @@ export default {
       return value.length > 0 || "Cannot be empty";
     },
     syncData() {
-      this.menu = this.$store.state.site.menu;
+      this.menu = this.$store.state.site.menu.slice(0);
     },
     deleteItem(pos) {
       if (pos < this.menu.length) {

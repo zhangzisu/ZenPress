@@ -95,7 +95,7 @@ export default {
       userrole: "Administrator",
       admin_drawer_content: [
         {
-          icon: "account_circle",
+          icon: "settings",
           title: "site_management",
           drawer: [
             {
