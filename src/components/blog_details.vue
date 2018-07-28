@@ -24,10 +24,6 @@
 								<v-icon left>label</v-icon>
 								{{ tag }}
 							</v-chip>
-							<v-chip v-for="(keyword, i) in post.keywords" :key="`keyword${i}`" label>
-								<v-icon left>search</v-icon>
-								{{ keyword }}
-							</v-chip>
 						</div>
 					</v-card-text>
 					<v-card-actions>
@@ -73,7 +69,6 @@ export default {
         header_media: "",
         content: "",
         tags: [],
-        keywords: [],
         published: null
       }
     };

@@ -12,13 +12,13 @@
 						</v-card-title>
 						<v-card-text>
 							<v-text-field v-model="post.title" :rules="[noEmpty]" :label="$t('title')" required />
-							<v-text-field v-model="post.subtitle" :rules="[noEmpty]" :label="$t('subtitle')" required />
+							<v-text-field v-model="post.subtitle" :rules="[]" :label="$t('subtitle')" required />
 							<v-text-field v-model="post.header_media" :rules="[]" :label="$t('header_media')" />
 							<v-divider/>
-							<v-combobox v-model="post.tags" hide-selected label="Tags" multiple chips clearable/>
-							<v-combobox v-model="post.keywords" :items="post.content.split(' ')" hide-selected label="Keywords" multiple chips clearable/>
+							<v-combobox v-model="post.tags" :label="$t('tags')" hide-selected multiple chips clearable/>
 							<v-divider/>
 							<v-textarea v-model="post.summary" :rules="[]" :label="$t('summary')"/>
+							<div class="title" v-text="$t('content')"/>
 							<editor v-model="post.content" lang="markdown" theme="solarized_light" height="500" @init="editorInit"/>
 							<v-divider/>
 							<v-switch v-model="post.topmost" :label="$t('topmost')"/>
@@ -80,7 +80,6 @@ export default {
         header_media: "",
         content: "",
         tags: [],
-        keywords: [],
         published: Number.MAX_SAFE_INTEGER,
         topmost: false,
         featured: false

@@ -3,12 +3,7 @@
 		<v-layout fill-height>
 			<v-flex>
 				<div>
-					<v-data-table
-						:headers="headers"
-						:items="posts"
-						hide-actions
-						class="elevation-1"
-					>
+					<v-data-table	:headers="headers"	:items="posts"	:pagination.sync="pagination" class="elevation-1" item-key="_id">
 						<template slot="items" slot-scope="props">
 							<td>{{ props.item._id.substr(0, 5) }}</td>
 							<td>{{ props.item.title }}</td>
@@ -46,6 +41,7 @@ export default {
         { text: "Tags", value: "tags" },
         { text: "Actions", sortable: false, align: "right", width: "128px" }
       ],
+      pagination: { sortBy: "_id", descending: true },
       posts: []
     };
   },

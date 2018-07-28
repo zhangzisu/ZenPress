@@ -17,6 +17,13 @@
 						<v-btn depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
 					</v-card-actions>
 				</v-card>
+				<v-card flat>
+					<v-card-actions>
+						<v-spacer/>
+						<v-btn depressed color="primary" @click="loadMore" v-text="$t('load_more')"/>
+						<v-spacer/>
+					</v-card-actions>
+				</v-card>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -29,7 +36,9 @@ export default {
   name: "blog_home",
   data() {
     return {
-      posts: []
+      posts: [],
+      search: "",
+      tags: []
     };
   },
   computed: {
@@ -38,11 +47,39 @@ export default {
   methods: {
     async fetchPost() {
       try {
+        this.posts = [];
         this.$store.commit("querying", true);
-        let result = await axios.get("/blog");
+
+        let requestObject = {};
+        if (this.search && this.search.length)
+          requestObject.search = this.search;
+        if (this.tags && this.tags.length) requestObject.tags = this.tags;
+
+        let result = await axios.post("/blog", requestObject);
         if (result.status !== 200)
           throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         this.posts = result.data;
+        this.$store.commit("querying", false);
+      } catch (e) {
+        this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
+    },
+    async loadMore() {
+      try {
+        this.$store.commit("querying", true);
+
+        let requestObject = {};
+        if (this.search && this.search.length)
+          requestObject.search = this.search;
+        if (this.tags && this.tags.length) requestObject.tags = this.tags;
+        requestObject.skip = this.posts.length;
+
+        let result = await axios.post("/blog", requestObject);
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        this.posts = this.posts.concat(result.data);
         this.$store.commit("querying", false);
       } catch (e) {
         this.$store.commit("querying", false);
@@ -56,10 +93,26 @@ export default {
     }
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => vm.fetchPost());
+    next(vm => {
+      vm.search = "";
+      vm.tags = [];
+      if (to.query.q) {
+        let parsed = JSON.parse(decodeURIComponent(to.query.q));
+        vm.search = parsed.search;
+        vm.tags = parsed.tags;
+      }
+      vm.fetchPost();
+    });
   },
   beforeRouteUpdate(to, from, next) {
     next();
+    this.search = "";
+    this.tags = [];
+    if (to.query.q) {
+      let parsed = JSON.parse(decodeURIComponent(to.query.q));
+      this.search = parsed.search;
+      this.tags = parsed.tags;
+    }
     this.fetchPost();
   }
 };
