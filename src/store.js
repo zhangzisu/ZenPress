@@ -49,7 +49,7 @@ export default new Vuex.Store({
         context.commit("site", result.data);
         context.commit("querying", false);
       } catch (e) {
-        this.$store.commit("querying", false);
+        context.commit("querying", false);
         context.commit("error_status", true);
         context.commit("error_text", e.message);
       }
@@ -64,7 +64,7 @@ export default new Vuex.Store({
         context.commit("authenticate", result.data);
         context.commit("querying", false);
       } catch (e) {
-        this.$store.commit("querying", false);
+        context.commit("querying", false);
         context.commit("error_status", true);
         context.commit("error_text", e.message);
       }
@@ -74,7 +74,7 @@ export default new Vuex.Store({
         context.commit("authenticate", null);
         delete axios.defaults.headers.auth;
       } catch (e) {
-        this.$store.commit("querying", false);
+        context.commit("querying", false);
         context.commit("error_status", true);
         context.commit("error_text", e.message);
       }

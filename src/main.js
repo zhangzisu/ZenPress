@@ -1,7 +1,7 @@
 import "@babel/polyfill";
 
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost/api/5b57332f0879ba1f60816da7";
+axios.defaults.baseURL = "http://localhost/api/5b555bb77d8c4d384c0251d0";
 
 import Vue from "vue";
 import store from "./store";
@@ -16,7 +16,9 @@ import "./assets/github.css";
 
 Vue.component("v-gravatar", Gravatar);
 Vue.config.productionTip = false;
-axios.defaults.headers.auth = store.state.authentication;
+if (store.state.authentication) {
+  axios.defaults.headers.auth = store.state.authentication;
+}
 
 new Vue({
   router,

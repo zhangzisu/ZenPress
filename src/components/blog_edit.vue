@@ -19,7 +19,7 @@
 							<v-combobox v-model="post.keywords" :items="post.content.split(' ')" hide-selected label="Keywords" multiple chips clearable/>
 							<v-divider/>
 							<v-textarea v-model="post.summary" :rules="[]" :label="$t('summary')"/>
-							<editor :init="editor_config" v-model="post.content" api-key="meu59dobqbucphx214sgv3apbmcmxwqqoy1im80fsvnrujce"/>
+							<editor v-model="post.content" lang="markdown" theme="solarized_light" height="500" @init="editorInit"/>
 							<v-divider/>
 							<v-switch v-model="post.topmost" :label="$t('topmost')"/>
 							<v-switch v-model="post.featured" :label="$t('featured')"/>
@@ -87,10 +87,7 @@ export default {
       },
       valid: false,
       dialog: false,
-      time: null,
-      editor_config: {
-        plugins: ["code", "wordcount", "spellchecker"]
-      }
+      time: null
     };
   },
   computed: {},
@@ -152,12 +149,12 @@ export default {
       this.post.published = x;
     },
     editorInit() {
-      require("brace/ext/language_tools"); //language extension prerequsite...
+      require("brace/ext/language_tools");
       require("brace/mode/html");
-      require("brace/mode/javascript"); //language
-      require("brace/mode/less");
-      require("brace/theme/chrome");
-      require("brace/snippets/javascript"); //snippet
+      require("brace/mode/javascript");
+      require("brace/mode/markdown");
+      require("brace/theme/solarized_light");
+      require("brace/snippets/javascript");
     }
   },
   beforeRouteEnter(to, from, next) {

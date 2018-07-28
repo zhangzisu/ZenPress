@@ -24,8 +24,6 @@
 								<v-icon left>label</v-icon>
 								{{ tag }}
 							</v-chip>
-						</div>
-						<div>
 							<v-chip v-for="(keyword, i) in post.keywords" :key="`keyword${i}`" label>
 								<v-icon left>search</v-icon>
 								{{ keyword }}
@@ -123,8 +121,6 @@ export default {
   box-shadow: none
   overflow-x: auto
   overflow-y: hidden
-  background: #2d2d2d
-  color: #fff
 pre, code
   margin: 0
   box-shadow: none
