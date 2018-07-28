@@ -15,7 +15,7 @@
 					</v-card-title>
 					<v-card-text>
 						<v-form v-model="valid">
-							<v-text-field :label="$t('search')" v-model="form.search" :rules="[notEmpty]"/>
+							<v-text-field :label="$t('search')" v-model="form.search" :rules="[]"/>
 							<v-combobox v-model="form.tags" :label="$t('tags')" hide-selected multiple chips clearable/>
 						</v-form>
 					</v-card-text>
@@ -52,10 +52,14 @@ export default {
       return (str && str.length >= 1) || "Cannot be empty";
     },
     doSearch() {
-      this.$router.push({
-        name: "blog",
-        query: { q: encodeURIComponent(JSON.stringify(this.form)) }
-      });
+      if (this.form.search.length || this.form.tags.length) {
+        this.$router.push({
+          name: "blog",
+          query: { q: encodeURIComponent(JSON.stringify(this.form)) }
+        });
+      } else {
+        this.doClear();
+      }
     }
   }
 };

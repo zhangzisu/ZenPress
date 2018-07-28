@@ -20,7 +20,7 @@
 					<v-divider/>
 					<v-card-text>
 						<div>
-							<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label>
+							<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click="copyText(tag)">
 								<v-icon left>label</v-icon>
 								{{ tag }}
 							</v-chip>
@@ -42,6 +42,7 @@ import marked, { Renderer } from "marked";
 import highlightjs from "highlight.js";
 import DOMPurify from "dompurify";
 import axios from "axios";
+import copy from "copy-to-clipboard";
 
 const renderer = new Renderer();
 renderer.code = (code, language) => {
@@ -99,6 +100,15 @@ export default {
     formatDate(date) {
       if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
       return this.$t("published_at") + ": " + new Date(date).toLocaleString();
+    },
+    copyText(str) {
+      if (copy(str)) {
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", this.$t("copied", [str]));
+      } else {
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", this.$t("copy_failed_text"));
+      }
     }
   },
   beforeRouteEnter(to, from, next) {

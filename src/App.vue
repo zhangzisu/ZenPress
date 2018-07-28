@@ -76,7 +76,7 @@
 			</v-dialog>
 			<!-- Error -->
 			<v-snackbar v-model="error_status" :timeout="3000" bottom right>
-				{{ $t("error") }}: {{ error_text }}
+				{{ $t("info") }}: {{ error_text }}
 			</v-snackbar>
 		</v-content>
 	</v-app>
