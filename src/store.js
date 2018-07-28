@@ -47,6 +47,7 @@ export default new Vuex.Store({
         if (result.status !== 200)
           throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         context.commit("site", result.data);
+        document.title = result.data.title;
         context.commit("querying", false);
       } catch (e) {
         context.commit("querying", false);
