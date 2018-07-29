@@ -79,6 +79,12 @@
 				{{ $t("info") }}: {{ error_text }}
 			</v-snackbar>
 		</v-content>
+
+		<v-footer class="pa-3">
+			<div>ZenPress version.{{ version }}</div>
+			<v-spacer/>
+			<div>&copy; {{ new Date().getFullYear() }}</div>
+		</v-footer>
 	</v-app>
 </template>
 
@@ -190,6 +196,9 @@ export default {
     },
     authenticated: function() {
       return !!this.$store.state.authentication;
+    },
+    version: function() {
+      return this.$store.state.version;
     }
   },
   created() {
