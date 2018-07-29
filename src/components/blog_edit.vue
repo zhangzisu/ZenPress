@@ -188,9 +188,9 @@ export default {
 
 <style>
 .ace_gutter {
-  z-index: auto;
+  z-index: 1 !important;
 }
 .ace_scrollbar {
-  z-index: auto;
+  z-index: 1 !important;
 }
 </style>
