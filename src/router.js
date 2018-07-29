@@ -7,7 +7,6 @@ import * as components from "./components";
 Vue.use(Router);
 
 export default new Router({
-  mode: "history",
   routes: [
     {
       path: "/",
@@ -95,14 +94,13 @@ export default new Router({
         },
         {
           path: "blog/new",
+          name: "new_blog",
           component: components.blog_edit
         },
         {
           path: "blog/edit/:id",
-          component: components.blog_edit,
-          props: function(route) {
-            return { post_id: route.params.id };
-          }
+          name: "edit_blog",
+          component: components.blog_edit
         }
       ]
     },

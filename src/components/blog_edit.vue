@@ -66,11 +66,9 @@ export default {
   components: {
     editor: Editor
   },
-  props: {
-    post_id: String
-  },
   data() {
     return {
+      post_id: "",
       post: {
         _id: "",
         site_id: "",
@@ -94,6 +92,12 @@ export default {
     dialog: function(val) {
       if (val) {
         this.time = new Date(this.post.published).toLocaleString();
+      }
+    },
+    $route(to) {
+      this.resetPost();
+      if ((this.post_id = to.params.id)) {
+        this.fetch();
       }
     }
   },
@@ -129,7 +133,7 @@ export default {
           if (result.status !== 200)
             throw new Error(`HTTP Error ${result.status}: ${result.data}`);
           this.$store.commit("querying", false);
-          this.$router.push(`/admin/blog/edit/${result.data}`);
+          this.$router.push({ name: "edit_blog", params: { id: result.data } });
         }
       } catch (e) {
         this.$store.commit("querying", false);
@@ -154,18 +158,39 @@ export default {
       require("brace/mode/markdown");
       require("brace/theme/solarized_light");
       require("brace/snippets/javascript");
+    },
+    resetPost() {
+      this.post = {
+        _id: "",
+        site_id: "",
+        title: "",
+        subtitle: "",
+        summary: "",
+        header_media: "",
+        content: "",
+        tags: [],
+        published: Number.MAX_SAFE_INTEGER,
+        topmost: false,
+        featured: false
+      };
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (vm.post_id) {
+      vm.resetPost();
+      if ((vm.post_id = to.params.id)) {
         vm.fetch();
       }
     });
-  },
-  beforeRouteUpdate(to, from, next) {
-    next();
-    this.fetch();
   }
 };
 </script>
+
+<style>
+.ace_gutter {
+  z-index: auto;
+}
+.ace_scrollbar {
+  z-index: auto;
+}
+</style>
