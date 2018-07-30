@@ -15,6 +15,9 @@ module.exports = {
     workboxPluginMode: "InjectManifest",
     name: "ZenPress",
     themeColor: "#3498DB",
-    msTileColor: "#3498DB"
+    msTileColor: "#3498DB",
+    workboxOptions: {
+      swSrc: "src/service-worker.js"
+    }
   }
 };
