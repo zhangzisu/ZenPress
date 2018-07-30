@@ -89,8 +89,6 @@
 </template>
 
 <script>
-let version = require("../package.json").version;
-
 export default {
   name: "App",
   data() {
@@ -98,9 +96,6 @@ export default {
       common_drawer: false,
       title: "ZenPress",
       admin_drawer: false,
-      username: "admin",
-      useremail: "admin@zhangzisu.cn",
-      userrole: "Administrator",
       admin_drawer_content: [
         {
           icon: "settings",
@@ -170,7 +165,8 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      version: "0.1.4"
     };
   },
   computed: {
@@ -198,9 +194,6 @@ export default {
     },
     authenticated: function() {
       return !!this.$store.state.authentication;
-    },
-    version: function() {
-      return version;
     }
   },
   created() {

@@ -153,6 +153,8 @@ export default {
     },
     editorInit() {
       require("brace/ext/language_tools");
+      require("brace/ext/beautify");
+      require("brace/ext/searchbox");
       require("brace/mode/html");
       require("brace/mode/javascript");
       require("brace/mode/markdown");
