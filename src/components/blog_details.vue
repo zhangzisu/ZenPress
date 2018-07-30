@@ -38,11 +38,12 @@
 </template>
 
 <script>
-import marked, { Renderer } from "marked";
+import katex from "katex";
+import marked, { Renderer } from "marked-katex";
 import highlightjs from "highlight.js";
-import DOMPurify from "dompurify";
 import axios from "axios";
 import copy from "copy-to-clipboard";
+import "katex/dist/katex.css";
 
 const renderer = new Renderer();
 renderer.code = (code, language) => {
@@ -53,7 +54,7 @@ renderer.code = (code, language) => {
   return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
 };
 
-marked.setOptions({ renderer });
+marked.setOptions({ renderer: renderer, kaTex: katex });
 
 export default {
   name: "blog_details",
@@ -95,7 +96,7 @@ export default {
       }
     },
     render(markdown) {
-      return DOMPurify.sanitize(marked(markdown));
+      return marked(markdown);
     },
     formatDate(date) {
       if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");

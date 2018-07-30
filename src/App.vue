@@ -89,6 +89,8 @@
 </template>
 
 <script>
+let version = require("../package.json").version;
+
 export default {
   name: "App",
   data() {
@@ -198,7 +200,7 @@ export default {
       return !!this.$store.state.authentication;
     },
     version: function() {
-      return this.$store.state.version;
+      return version;
     }
   },
   created() {
