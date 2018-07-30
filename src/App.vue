@@ -81,7 +81,7 @@
 		</v-content>
 
 		<v-footer class="pa-3">
-			<div>ZenPress version.{{ version }}</div>
+			<div><a href="https://github.com/ZhangZisu/ZenPress" target="_blank">ZenPress</a> version.{{ version }}</div>
 			<v-spacer/>
 			<div>&copy; {{ new Date().getFullYear() }}</div>
 		</v-footer>

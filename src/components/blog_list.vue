@@ -41,7 +41,7 @@ export default {
         { text: "Tags", value: "tags" },
         { text: "Actions", sortable: false, align: "right", width: "128px" }
       ],
-      pagination: { sortBy: "_id", descending: true },
+      pagination: { sortBy: "published", descending: true },
       posts: []
     };
   },
