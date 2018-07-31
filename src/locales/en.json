@@ -3,6 +3,7 @@
   "about_link": "About",
   "actions": "Actions",
   "admin": "Admin",
+  "api_calls": "API Calls",
   "blog_link": "Blog",
   "blog_management": "Blogging",
   "cancel": "Cancel",
@@ -69,5 +70,6 @@
   "view": "View",
   "view_posts": "View posts",
   "view_stats": "View stats",
+  "visitors": "Visitors",
   "wait_text": "Please wait"
 }

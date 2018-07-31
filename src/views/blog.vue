@@ -3,8 +3,28 @@
 		<v-layout fill-height>
 			<v-flex>
 				<router-view/>
+				<v-card v-if="replaceBlogBar">
+					<v-card-title primary-title>
+						<div>
+							<div class="headline">
+								Blog
+							</div>
+						</div>
+					</v-card-title>
+					<v-card-text>
+						<v-form v-model="valid">
+							<v-text-field :label="$t('search')" v-model="form.search" :rules="[]"/>
+							<v-combobox v-model="form.tags" :label="$t('tags')" hide-selected multiple chips clearable/>
+						</v-form>
+					</v-card-text>
+					<v-card-actions>
+						<v-spacer/>
+						<v-btn depressed @click="doClear" v-text="$t('reset')"/>
+						<v-btn :disabled="!valid" depressed color="primary" @click="doSearch" v-text="$t('search')"/>
+					</v-card-actions>
+				</v-card>
 			</v-flex>
-			<v-flex lg3>
+			<v-flex v-if="!replaceBlogBar" lg3>
 				<v-card>
 					<v-card-title primary-title>
 						<div>
@@ -41,6 +61,22 @@ export default {
       },
       valid: false
     };
+  },
+  computed: {
+    replaceBlogBar() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return true;
+        case "sm":
+          return true;
+        case "md":
+          return false;
+        case "lg":
+          return false;
+        case "xl":
+          return false;
+      }
+    }
   },
   methods: {
     doClear() {
