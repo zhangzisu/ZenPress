@@ -11,7 +11,9 @@
 								<div class="subheading" v-text="post.subtitle"/>
 							</div>
 						</v-card-title>
-						<v-card-text v-text="post.summary"/>
+						<v-card-text>
+							<div class="markdown-body" v-html="render(post.summary)"/>
+						</v-card-text>
 						<v-card-text>
 							<div>
 								<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click="copyText(tag)">
@@ -33,8 +35,23 @@
 </template>
 
 <script>
+import katex from "katex";
+import marked, { Renderer } from "marked-katex";
+import highlightjs from "highlight.js";
 import axios from "axios";
 import copy from "copy-to-clipboard";
+import "katex/dist/katex.css";
+
+const renderer = new Renderer();
+renderer.code = (code, language) => {
+  const validLang = !!(language && highlightjs.getLanguage(language));
+  const highlighted = validLang
+    ? highlightjs.highlight(language, code).value
+    : code;
+  return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
+};
+
+marked.setOptions({ renderer: renderer, kaTex: katex });
 
 export default {
   name: "home",
@@ -70,6 +87,9 @@ export default {
         this.$store.commit("error_status", true);
         this.$store.commit("error_text", this.$t("copy_failed_text"));
       }
+    },
+    render(markdown) {
+      return marked(markdown);
     }
   },
   beforeRouteEnter(to, from, next) {

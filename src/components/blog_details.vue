@@ -11,7 +11,7 @@
 						</div>
 					</v-card-title>
 					<v-card-text>
-						<blockquote v-text="post.summary" />
+						<div class="markdown-body" v-html="render(post.summary)"/>
 					</v-card-text>
 					<v-divider/>
 					<v-card-text>
