@@ -1,5 +1,9 @@
 # ZenPress
 
+Related projects:
+ - [ZenPressServer](https://github.com/ZhangZisu/ZenPressServer)
+ - [ZenPressDeploy](https://github.com/ZhangZisu/ZenPressDepoly)
+
 ## Project setup
 ```
 npm install
