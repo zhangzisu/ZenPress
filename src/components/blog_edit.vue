@@ -17,7 +17,8 @@
 							<v-divider/>
 							<v-combobox v-model="post.tags" :label="$t('tags')" hide-selected multiple chips clearable/>
 							<v-divider/>
-							<v-textarea v-model="post.summary" :rules="[]" :label="$t('summary')"/>
+							<div class="title" v-text="$t('summary')"/>
+							<editor v-model="post.summary" lang="markdown" theme="solarized_light" height="200" @init="editorInit"/>
 							<div class="title" v-text="$t('content')"/>
 							<editor v-model="post.content" lang="markdown" theme="solarized_light" height="500" @init="editorInit"/>
 							<v-divider/>
