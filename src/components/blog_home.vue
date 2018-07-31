@@ -27,10 +27,11 @@
 						<v-btn depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
 					</v-card-actions>
 				</v-card>
-				<v-card flat>
+				<v-card flat style="background: transparent">
 					<v-card-actions>
+						{{ $t('query_result', [resultCount]) }}
 						<v-spacer/>
-						<v-btn depressed color="primary" @click="loadMore" v-text="$t('load_more')"/>
+						<v-btn v-if="posts.length < resultCount" depressed color="primary" @click="loadMore" v-text="$t('load_more')"/>
 						<v-spacer/>
 					</v-card-actions>
 				</v-card>
@@ -64,7 +65,8 @@ export default {
     return {
       posts: [],
       search: "",
-      tags: []
+      tags: [],
+      resultCount: 0
     };
   },
   computed: {
@@ -85,6 +87,11 @@ export default {
         if (result.status !== 200)
           throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         this.posts = result.data;
+        result = await axios.post("/blog/count", requestObject);
+        if (result.status !== 200)
+          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        this.resultCount = result.data.count;
+
         this.$store.commit("querying", false);
       } catch (e) {
         this.$store.commit("querying", false);

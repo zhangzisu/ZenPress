@@ -46,6 +46,7 @@
   "published_at": "Published at",
   "published_time_input_label": "Published time",
   "published_time_input_placeholder": "Input a valid date-time string, otherwise it'll be set to unpublished",
+  "query_result": "Found {0} records.",
   "read_more": "Read more",
   "reset": "Reset",
   "search": "Search",
