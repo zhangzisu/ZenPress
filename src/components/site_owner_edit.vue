@@ -17,8 +17,8 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer/>
-							<v-btn depressed color="secondary" @click="$router.go(-1)" v-text="$t('cancel')"/>
-							<v-btn depressed color="primary" @click="submit" v-text="$t('submit')"/>
+							<v-btn depressed color="secondary" @click.stop="$router.go(-1)" v-text="$t('cancel')"/>
+							<v-btn depressed color="primary" @click.stop="submit" v-text="$t('submit')"/>
 						</v-card-actions>
 					</v-card>
 				</v-form>

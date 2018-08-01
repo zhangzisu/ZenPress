@@ -12,7 +12,7 @@
 					<v-card-text v-text="details"/>
 					<v-card-actions>
 						<v-spacer/>
-						<v-btn depressed color="primary" @click="$router.push('/')" v-text="$t('goto_home')"/>
+						<v-btn depressed color="primary" @click.stop="$router.push('/')" v-text="$t('goto_home')"/>
 					</v-card-actions>
 				</v-card>
 			</v-flex>

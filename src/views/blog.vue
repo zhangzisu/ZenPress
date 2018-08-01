@@ -19,8 +19,8 @@
 					</v-card-text>
 					<v-card-actions>
 						<v-spacer/>
-						<v-btn depressed @click="doClear" v-text="$t('reset')"/>
-						<v-btn :disabled="!valid" depressed color="primary" @click="doSearch" v-text="$t('search')"/>
+						<v-btn depressed @click.stop="doClear" v-text="$t('reset')"/>
+						<v-btn :disabled="!valid" depressed color="primary" @click.stop="doSearch" v-text="$t('search')"/>
 					</v-card-actions>
 				</v-card>
 			</v-flex>
@@ -41,8 +41,8 @@
 					</v-card-text>
 					<v-card-actions>
 						<v-spacer/>
-						<v-btn depressed @click="doClear" v-text="$t('reset')"/>
-						<v-btn :disabled="!valid" depressed color="primary" @click="doSearch" v-text="$t('search')"/>
+						<v-btn depressed @click.stop="doClear" v-text="$t('reset')"/>
+						<v-btn :disabled="!valid" depressed color="primary" @click.stop="doSearch" v-text="$t('search')"/>
 					</v-card-actions>
 				</v-card>
 			</v-flex>

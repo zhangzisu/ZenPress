@@ -23,13 +23,13 @@
 											<v-icon>settings</v-icon>
 										</v-btn>
 										<v-list>
-											<v-list-tile @click="deleteItem(id)">
+											<v-list-tile @click.stop="deleteItem(id)">
 												<v-list-tile-title v-text="$t('delete')"/>
 											</v-list-tile>
-											<v-list-tile @click="moveUpItem(id)">
+											<v-list-tile @click.stop="moveUpItem(id)">
 												<v-list-tile-title v-text="$t('move_up')"/>
 											</v-list-tile>
-											<v-list-tile @click="moveDownItem(id)">
+											<v-list-tile @click.stop="moveDownItem(id)">
 												<v-list-tile-title v-text="$t('move_down')"/>
 											</v-list-tile>
 										</v-list>
@@ -40,7 +40,7 @@
 					</v-card-text>
 					<v-card-actions>
 						<v-dialog v-model="dialog" width="500">
-							<v-btn slot="activator" depressed @click="newItem" v-text="$t('new_item')"/>
+							<v-btn slot="activator" depressed @click.stop="newItem" v-text="$t('new_item')"/>
 							<v-card>
 								<v-card-title primary-title>
 									<div class="headline" v-text="$t('new_item')"/>
@@ -54,14 +54,14 @@
 								</v-card-text>
 								<v-card-actions>
 									<v-spacer/>
-									<v-btn flat @click="cancelNewItem" v-text="$t('cancel')"/>
-									<v-btn :disabled="!valid" color="primary" flat @click="confirmNewItem" v-text="$t('ok')"/>
+									<v-btn flat @click.stop="cancelNewItem" v-text="$t('cancel')"/>
+									<v-btn :disabled="!valid" color="primary" flat @click.stop="confirmNewItem" v-text="$t('ok')"/>
 								</v-card-actions>
 							</v-card>
 						</v-dialog>
 						<v-spacer/>
-						<v-btn depressed color="secondary" @click="$router.go(-1)" v-text="$t('cancel')"/>
-						<v-btn depressed color="primary" @click="submit" v-text="$t('submit')"/>
+						<v-btn depressed color="secondary" @click.stop="$router.go(-1)" v-text="$t('cancel')"/>
+						<v-btn depressed color="primary" @click.stop="submit" v-text="$t('submit')"/>
 					</v-card-actions>
 				</v-card>
 			</v-flex>

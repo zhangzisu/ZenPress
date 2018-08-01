@@ -17,7 +17,7 @@
 			</v-toolbar>
 			<v-divider/>
 			<v-list>
-				<v-list-tile  v-for="(item, i) in site.menu" :key="i" :to="item.link">
+				<v-list-tile  v-for="(item, i) in site.menu" :key="`sm_${i}`" :to="item.link">
 					<v-list-tile-action>
 						<v-icon v-html="item.icon"/>
 					</v-list-tile-action>
@@ -31,19 +31,19 @@
 		<!-- Admin drawer -->
 		<v-navigation-drawer v-if="authenticated" v-model="admin_drawer" temporary fixed app right>
 			<v-list>
-				<v-list-group v-for="item in admin_drawer_content" v-if="!item.disallowed" :key="item.title" :prepend-icon="item.icon">
+				<v-list-group v-for="item in admin_drawer_content" v-if="!item.disallowed" :key="`adc${item.title}`" :prepend-icon="item.icon">
 					<v-list-tile slot="activator">
 						<v-list-tile-content>
 							<v-list-tile-title v-text="$t(item.title)"/>
 						</v-list-tile-content>
 					</v-list-tile>
-					<v-list-group v-for="drawer in item.drawer" v-if="!drawer.disallowed" :key="drawer.title" no-action sub-group>
+					<v-list-group v-for="drawer in item.drawer" v-if="!drawer.disallowed" :key="`id${drawer.title}`" no-action sub-group>
 						<v-list-tile slot="activator">
 							<v-list-tile-content>
 								<v-list-tile-title v-text="$t(drawer.title)"/>
 							</v-list-tile-content>
 						</v-list-tile>
-						<v-list-tile v-for="sub in drawer.subs" v-if="!sub.disallowed" :key="sub.title" :to="sub.link">
+						<v-list-tile v-for="sub in drawer.subs" v-if="!sub.disallowed" :key="`ds${sub.title}`" :to="sub.link">
 							<v-list-tile-content>
 								<v-list-tile-title v-text="$t(sub.title)"/>
 							</v-list-tile-content>
@@ -58,9 +58,15 @@
 			<v-toolbar-side-icon @click.stop="common_drawer = !common_drawer"/>
 			<v-toolbar-title v-text="site.title"/>
 			<v-spacer/>
-			<v-btn flat @click.stop="toggle_admin">
-				{{ $t("toggle_admin_panel") }}
-			</v-btn>
+			<v-menu offset-y>
+				<v-btn slot="activator" flat v-text="$t('language')"/>
+				<v-list>
+					<v-list-tile v-for="(lang, i) in languages" :key="`lang${i}`" ripple @click="changeLang(lang.name)">
+						<v-list-tile-title v-text="lang.display_name"/>
+					</v-list-tile>
+				</v-list>
+			</v-menu>
+			<v-btn flat @click.stop="toggle_admin" v-text="$t('toggle_admin_panel')"/>
 		</v-toolbar>
 		<v-content>
 			<router-view/>
@@ -89,6 +95,8 @@
 </template>
 
 <script>
+import admin_drawer_content from "./menus/admin_drawer";
+
 export default {
   name: "App",
   data() {
@@ -96,77 +104,14 @@ export default {
       common_drawer: false,
       title: "ZenPress",
       admin_drawer: false,
-      admin_drawer_content: [
+      admin_drawer_content: admin_drawer_content,
+      languages: [
         {
-          icon: "settings",
-          title: "site_management",
-          drawer: [
-            {
-              title: "actions",
-              subs: [
-                {
-                  title: "view_stats",
-                  link: "/admin/site"
-                },
-                {
-                  title: "logout",
-                  link: "/admin/logout"
-                }
-              ]
-            },
-            {
-              title: "admin",
-              subs: [
-                {
-                  title: "edit_site_info",
-                  link: "/admin/site/info"
-                },
-                {
-                  title: "edit_site_menu",
-                  link: "/admin/site/menu"
-                },
-                {
-                  title: "edit_owner_info",
-                  link: "/admin/site/owner"
-                },
-                {
-                  title: "edit_password",
-                  link: "/admin/site/password"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          icon: "subject",
-          title: "blog_management",
-          drawer: [
-            {
-              title: "actions",
-              subs: [
-                {
-                  title: "new_post",
-                  link: "/admin/blog/new"
-                },
-                {
-                  title: "view_posts",
-                  link: "/blog"
-                }
-              ]
-            },
-            {
-              title: "admin",
-              subs: [
-                {
-                  title: "manage_posts",
-                  link: "/admin/blog"
-                }
-              ]
-            }
-          ]
+          name: "en",
+          display_name: "English"
         }
       ],
-      version: "0.1.9"
+      version: "0.2.0"
     };
   },
   computed: {
@@ -206,6 +151,9 @@ export default {
       } else {
         this.$router.push("/login");
       }
+    },
+    changeLang(lang) {
+      this.$i18n.locale = lang;
     }
   }
 };

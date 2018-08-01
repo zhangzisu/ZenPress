@@ -10,10 +10,10 @@
 							<td>{{ formatDate(props.item.published) }}</td>
 							<td>{{ props.item.tags.join(',') }}</td>
 							<td class="justify-end layout px-0">
-								<v-btn icon @click="$router.push(`/admin/blog/edit/${props.item._id}`)">
+								<v-btn icon @click.stop="$router.push(`/admin/blog/edit/${props.item._id}`)">
 									<v-icon>edit</v-icon>
 								</v-btn>
-								<v-btn icon @click="deletePost(props.item._id)">
+								<v-btn icon @click.stop="deletePost(props.item._id)">
 									<v-icon>delete</v-icon>
 								</v-btn>
 							</td>

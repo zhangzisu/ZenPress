@@ -15,7 +15,7 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer/>
-							<v-btn :disabled="!valid" depressed color="primary" @click="login" v-text="$t('login')"/>
+							<v-btn :disabled="!valid" depressed color="primary" @click.stop="login" v-text="$t('login')"/>
 						</v-card-actions>
 					</v-card>
 				</v-form>

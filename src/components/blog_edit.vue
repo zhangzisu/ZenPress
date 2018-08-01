@@ -39,17 +39,17 @@
 									</v-card-text>
 
 									<v-card-actions>
-										<v-btn flat @click="time = (new Date()).toLocaleString()" v-text="$t('now')"/>
+										<v-btn flat @click.stop="time = (new Date()).toLocaleString()" v-text="$t('now')"/>
 										<v-spacer/>
-										<v-btn flat @click="dialog = false" v-text="$t('cancel')"/>
-										<v-btn color="primary" flat @click="setPublished" v-text="$t('ok')"/>
+										<v-btn flat @click.stop="dialog = false" v-text="$t('cancel')"/>
+										<v-btn color="primary" flat @click.stop="setPublished" v-text="$t('ok')"/>
 									</v-card-actions>
 								</v-card>
 							</v-dialog>
 							<v-spacer/>
-							<v-btn v-if="post_id" depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('view')"/>
-							<v-btn depressed color="secondary" @click="$router.go(-1)" v-text="$t('cancel')"/>
-							<v-btn depressed color="primary" @click="submit" v-text="$t('submit')"/>
+							<v-btn v-if="post_id" depressed @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('view')"/>
+							<v-btn depressed color="secondary" @click.stop="$router.go(-1)" v-text="$t('cancel')"/>
+							<v-btn depressed color="primary" @click.stop="submit" v-text="$t('submit')"/>
 						</v-card-actions>
 					</v-card>
 				</v-form>

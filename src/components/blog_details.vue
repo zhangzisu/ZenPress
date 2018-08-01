@@ -20,7 +20,7 @@
 					<v-divider/>
 					<v-card-text>
 						<div>
-							<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click="copyText(tag)">
+							<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click.stop="copyText(tag)">
 								<v-icon left>label</v-icon>
 								{{ tag }}
 							</v-chip>
@@ -29,7 +29,8 @@
 					<v-card-actions>
 						{{ formatDate(post.published) }}
 						<v-spacer/>
-						<v-btn v-if="authenticated" depressed @click="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
+						<v-btn depressed color="primary" @click.stop="share" v-text="$t('share')"/>
+						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
 					</v-card-actions>
 				</v-card>
 			</v-flex>
@@ -44,6 +45,7 @@ import highlightjs from "highlight.js";
 import axios from "axios";
 import copy from "copy-to-clipboard";
 import "katex/dist/katex.css";
+import getPostPermalink from "../permalink";
 
 const renderer = new Renderer();
 renderer.code = (code, language) => {
@@ -110,6 +112,15 @@ export default {
         this.$store.commit("error_status", true);
         this.$store.commit("error_text", this.$t("copy_failed_text"));
       }
+    },
+    share() {
+      if (copy(getPostPermalink(this.post_id))) {
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", this.$t("copied", ["permalink"]));
+      } else {
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", this.$t("copy_failed_text"));
+      }
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -117,6 +128,7 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     next();
+    this.post_id = to.params.id;
     this.fetch();
   }
 };

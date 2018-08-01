@@ -16,7 +16,7 @@
 						</v-card-text>
 						<v-card-text>
 							<div>
-								<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click="copyText(tag)">
+								<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click.stop="copyText(tag)">
 									<v-icon left>label</v-icon>
 									{{ tag }}
 								</v-chip>
@@ -25,7 +25,7 @@
 						<v-card-actions>
 							{{ formatDate(post.published) }}
 							<v-spacer/>
-							<v-btn depressed @click="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
+							<v-btn depressed @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
 						</v-card-actions>
 					</v-card>
 				</v-flex>
