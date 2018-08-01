@@ -76,6 +76,7 @@ export default {
     async fetchPost() {
       try {
         this.posts = [];
+        this.resultCount = 0;
         this.$store.commit("querying", true);
 
         let requestObject = {};
