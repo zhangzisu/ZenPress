@@ -59,14 +59,18 @@
 			<v-toolbar-title v-text="site.title"/>
 			<v-spacer/>
 			<v-menu offset-y>
-				<v-btn slot="activator" flat v-text="$t('language')"/>
+				<v-btn slot="activator" icon flat>
+					<v-icon>language</v-icon>
+				</v-btn>
 				<v-list>
 					<v-list-tile v-for="(lang, i) in languages" :key="`lang${i}`" ripple @click="changeLang(lang.name)">
 						<v-list-tile-title v-text="lang.display_name"/>
 					</v-list-tile>
 				</v-list>
 			</v-menu>
-			<v-btn flat @click.stop="toggle_admin" v-text="$t('toggle_admin_panel')"/>
+			<v-btn icon flat @click.stop="toggle_admin">
+				<v-icon>settings</v-icon>
+			</v-btn>
 		</v-toolbar>
 		<v-content>
 			<router-view/>
@@ -87,7 +91,8 @@
 		</v-content>
 
 		<v-footer class="pa-3">
-			<div><a href="https://github.com/ZhangZisu/ZenPress" target="_blank">ZenPress</a> {{ version }}</div>
+			<div><a href="https://github.com/ZhangZisu/ZenPress" target="_blank">ZenPress</a>&nbsp;{{ version }}&nbsp;</div>
+			<a @click="clearTagCache" v-text="$t('clear_tag_cache')"/>
 			<v-spacer/>
 			<div>&copy; {{ new Date().getFullYear() }}</div>
 		</v-footer>
@@ -111,7 +116,7 @@ export default {
           display_name: "English"
         }
       ],
-      version: "0.2.0"
+      version: "0.2.1"
     };
   },
   computed: {
@@ -142,6 +147,7 @@ export default {
     }
   },
   created() {
+    this.$store.commit("init");
     this.$store.dispatch("loadSite");
   },
   methods: {
@@ -154,6 +160,11 @@ export default {
     },
     changeLang(lang) {
       this.$i18n.locale = lang;
+    },
+    clearTagCache() {
+      this.$store.commit("purgeTags");
+      this.$store.commit("error_status", true);
+      this.$store.commit("error_text", "success");
     }
   }
 };

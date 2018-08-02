@@ -15,7 +15,7 @@
 							<v-text-field v-model="post.subtitle" :rules="[]" :label="$t('subtitle')" required />
 							<v-text-field v-model="post.header_media" :rules="[]" :label="$t('header_media')" />
 							<v-divider/>
-							<v-combobox v-model="post.tags" :label="$t('tags')" hide-selected multiple chips clearable/>
+							<v-combobox v-model="post.tags" :label="$t('tags')" :items="tag_items" hide-selected multiple chips clearable/>
 							<v-divider/>
 							<div class="title" v-text="$t('summary')"/>
 							<editor v-model="post.summary" lang="markdown" theme="solarized_light" height="200" @init="editorInit"/>
@@ -88,9 +88,13 @@ export default {
       time: null
     };
   },
-  computed: {},
+  computed: {
+    tag_items() {
+      return this.$store.state.post_tags;
+    }
+  },
   watch: {
-    dialog: function(val) {
+    dialog(val) {
       if (val) {
         this.time = new Date(this.post.published).toLocaleString();
       }
@@ -110,9 +114,8 @@ export default {
       try {
         this.$store.commit("querying", true);
         let result = await axios.get(`/blog/post/${this.post_id}`);
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         this.post = result.data;
+        this.$store.commit("addTags", this.post.tags);
         this.$store.commit("querying", false);
       } catch (e) {
         this.$store.commit("querying", false);
@@ -124,15 +127,11 @@ export default {
       try {
         this.$store.commit("querying", true);
         if (this.post_id) {
-          let result = await axios.put(`/blog/post/${this.post_id}`, this.post);
-          if (result.status !== 200)
-            throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+          await axios.put(`/blog/post/${this.post_id}`, this.post);
           this.$store.commit("querying", false);
           this.fetch();
         } else {
           let result = await axios.post("/blog/new", this.post);
-          if (result.status !== 200)
-            throw new Error(`HTTP Error ${result.status}: ${result.data}`);
           this.$store.commit("querying", false);
           this.$router.push({ name: "edit_blog", params: { id: result.data } });
         }

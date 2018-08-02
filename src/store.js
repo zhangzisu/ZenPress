@@ -20,9 +20,16 @@ export default new Vuex.Store({
     authentication: null,
     querying: false,
     error_status: false,
-    error_text: ""
+    error_text: "",
+    post_tags: [],
+    post_tags_set: new Set()
   },
   mutations: {
+    init(state) {
+      if (!(state.post_tags_set instanceof Set))
+        state.post_tags_set = new Set();
+      if (!(state.post_tags instanceof Array)) state.post_tags = [];
+    },
     site(state, payload) {
       state.site = payload;
     },
@@ -37,6 +44,18 @@ export default new Vuex.Store({
     },
     authenticate(state, value) {
       state.authentication = value;
+    },
+    addTags(state, payload) {
+      payload.forEach(x => {
+        if (!state.post_tags_set.has(x)) {
+          state.post_tags_set.add(x);
+          state.post_tags.push(x);
+        }
+      });
+    },
+    purgeTags(state) {
+      state.post_tags = [];
+      state.post_tags_set = new Set();
     }
   },
   actions: {
@@ -44,8 +63,6 @@ export default new Vuex.Store({
       try {
         context.commit("querying", true);
         let result = await axios.get("/info");
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         context.commit("site", result.data);
         document.title = result.data.title;
         context.commit("querying", false);
@@ -59,8 +76,6 @@ export default new Vuex.Store({
       try {
         context.commit("querying", true);
         let result = await axios.post("/login", { password });
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         axios.defaults.headers.auth = result.data;
         context.commit("authenticate", result.data);
         context.commit("querying", false);

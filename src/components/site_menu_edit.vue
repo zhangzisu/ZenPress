@@ -129,9 +129,7 @@ export default {
     async submit() {
       try {
         this.$store.commit("querying", true);
-        let result = await axios.put("/site/modify/menu", { menu: this.menu });
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        await axios.put("/site/modify/menu", { menu: this.menu });
         this.$store.commit("querying", false);
         this.$store.dispatch("loadSite");
         this.$router.push("/");

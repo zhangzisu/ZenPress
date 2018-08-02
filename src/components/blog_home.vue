@@ -86,12 +86,9 @@ export default {
         if (this.tags && this.tags.length) requestObject.tags = this.tags;
 
         let result = await axios.post("/blog", requestObject);
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        result.data.forEach(x => this.$store.commit("addTags", x.tags));
         this.posts = result.data;
         result = await axios.post("/blog/count", requestObject);
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         this.resultCount = result.data.count;
 
         this.$store.commit("querying", false);
@@ -112,8 +109,7 @@ export default {
         requestObject.skip = this.posts.length;
 
         let result = await axios.post("/blog", requestObject);
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        result.data.forEach(x => this.$store.commit("addTags", x.tags));
         this.posts = this.posts.concat(result.data);
         this.$store.commit("querying", false);
       } catch (e) {

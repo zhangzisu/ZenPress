@@ -50,8 +50,7 @@ export default {
       try {
         this.$store.commit("querying", true);
         let result = await axios.get("/blog/list");
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        result.data.forEach(x => this.$store.commit("addTags", x.tags));
         this.posts = result.data;
         this.$store.commit("querying", false);
       } catch (e) {
@@ -68,9 +67,7 @@ export default {
       try {
         if (confirm(`Delete post ${id} !`)) {
           this.$store.commit("querying", true);
-          let result = await axios.delete(`/blog/post/${id}`);
-          if (result.status !== 200)
-            throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+          await axios.delete(`/blog/post/${id}`);
           this.$store.commit("querying", false);
           this.fetchPost();
         }

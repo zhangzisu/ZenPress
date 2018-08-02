@@ -36,7 +36,7 @@
 					<v-card-text>
 						<v-form v-model="valid">
 							<v-text-field :label="$t('search')" v-model="form.search" :rules="[]"/>
-							<v-combobox v-model="form.tags" :label="$t('tags')" hide-selected multiple chips clearable/>
+							<v-combobox v-model="form.tags" :label="$t('tags')" :items="tag_items" hide-selected multiple chips clearable/>
 						</v-form>
 					</v-card-text>
 					<v-card-actions>
@@ -63,6 +63,9 @@ export default {
     };
   },
   computed: {
+    tag_items() {
+      return this.$store.state.post_tags;
+    },
     replaceBlogBar() {
       switch (this.$vuetify.breakpoint.name) {
         case "xs":

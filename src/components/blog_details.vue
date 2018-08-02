@@ -87,8 +87,6 @@ export default {
       try {
         this.$store.commit("querying", true);
         let result = await axios.get(`/blog/post/${this.post_id}`);
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
         this.post = result.data;
         this.$store.commit("querying", false);
       } catch (e) {

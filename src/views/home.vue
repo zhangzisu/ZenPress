@@ -65,8 +65,7 @@ export default {
       try {
         this.$store.commit("querying", true);
         let result = await axios.get("/blog/featured");
-        if (result.status !== 200)
-          throw new Error(`HTTP Error ${result.status}: ${result.data}`);
+        result.data.forEach(x => this.$store.commit("addTags", x.tags));
         this.posts = result.data;
         this.$store.commit("querying", false);
       } catch (e) {
