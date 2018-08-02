@@ -114,9 +114,13 @@ export default {
         {
           name: "en",
           display_name: "English"
+        },
+        {
+          name: "zh",
+          display_name: "中文"
         }
       ],
-      version: "0.2.1"
+      version: "0.2.2"
     };
   },
   computed: {

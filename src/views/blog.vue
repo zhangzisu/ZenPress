@@ -28,9 +28,7 @@
 				<v-card>
 					<v-card-title primary-title>
 						<div>
-							<div class="headline">
-								Blog
-							</div>
+							<div class="headline" v-text="$t('blog')"/>
 						</div>
 					</v-card-title>
 					<v-card-text>
