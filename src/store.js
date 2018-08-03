@@ -15,6 +15,10 @@ export default new Vuex.Store({
         name: "",
         email: "",
         bio: "administrator"
+      },
+      restrictions: {
+        max_api_call_perday: 0,
+        max_rw_api_call_perday: 0
       }
     },
     authentication: null,
@@ -29,6 +33,7 @@ export default new Vuex.Store({
       if (!(state.post_tags_set instanceof Set))
         state.post_tags_set = new Set();
       if (!(state.post_tags instanceof Array)) state.post_tags = [];
+      state.post_tags.forEach(x => state.post_tags_set.add(x));
     },
     site(state, payload) {
       state.site = payload;

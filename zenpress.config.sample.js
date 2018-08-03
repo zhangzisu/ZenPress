@@ -1,4 +1,5 @@
 export default {
-  "api-host": "http://localhost",
-  "api-key": "5b555bb77d8c4d384c0251d0"
+  "api-https": false,
+  "api-host": "localhost",
+  "api-key": "5b5c41a46a2e741b606adf76"
 };

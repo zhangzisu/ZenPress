@@ -1,8 +1,9 @@
-import config from "../zenpress.config";
+import cnf from "../zenpress.config";
 import "@babel/polyfill";
 
 import axios from "axios";
-axios.defaults.baseURL = `${config["api-host"]}/api/${config["api-key"]}`;
+const protocol = cnf["api-https"] ? "https://" : "http://";
+axios.defaults.baseURL = `${protocol}${cnf["api-host"]}/api/${cnf["api-key"]}`;
 
 import Vue from "vue";
 import store from "./store";

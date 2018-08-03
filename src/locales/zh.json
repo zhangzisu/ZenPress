@@ -53,6 +53,7 @@
 	"query_result": "找到{0}条结果",
 	"read_more": "阅读更多",
 	"reset": "重置",
+	"rw_api_calls": "读写API调用",
 	"search": "搜索",
 	"share": "分享",
 	"site_management": "网站管理",
