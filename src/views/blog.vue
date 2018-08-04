@@ -1,7 +1,7 @@
 <template>
 	<v-container fluid>
 		<v-layout fill-height>
-			<v-flex>
+			<v-flex :md9="!replaceBlogBar">
 				<router-view/>
 				<v-card v-if="replaceBlogBar">
 					<v-card-title primary-title>
@@ -24,7 +24,7 @@
 					</v-card-actions>
 				</v-card>
 			</v-flex>
-			<v-flex v-if="!replaceBlogBar" lg3>
+			<v-flex v-if="!replaceBlogBar" md3>
 				<v-card>
 					<v-card-title primary-title>
 						<div>

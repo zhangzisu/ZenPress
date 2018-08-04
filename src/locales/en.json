@@ -47,6 +47,7 @@
 	"new_post": "New post",
 	"now": "Now",
 	"ok": "OK",
+	"password": "Password",
 	"published_at": "Published at",
 	"published_time_input_label": "Published time",
 	"published_time_input_placeholder": "Input a valid date-time string, otherwise it'll be set to unpublished",

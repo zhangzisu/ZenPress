@@ -47,6 +47,7 @@
 	"new_post": "新文章",
 	"now": "现在",
 	"ok": "确认",
+	"password": "密码",
 	"published_at": "发布于",
 	"published_time_input_label": "发布时间",
 	"published_time_input_placeholder": "请输入合法date-time字符串，否则为未发布",
