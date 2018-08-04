@@ -94,7 +94,7 @@
 			<div><a href="https://github.com/ZhangZisu/ZenPress" target="_blank">ZenPress</a>&nbsp;{{ version }}&nbsp;</div>
 			<a @click="clearTagCache" v-text="$t('clear_tag_cache')"/>
 			<v-spacer/>
-			<div>&copy; {{ new Date().getFullYear() }}</div>
+			<div>&copy;&nbsp;{{ site.owner.name }}&nbsp;{{ new Date().getFullYear() }}</div>
 		</v-footer>
 	</v-app>
 </template>
@@ -120,7 +120,7 @@ export default {
           display_name: "中文"
         }
       ],
-      version: "0.2.3"
+      version: "0.2.4"
     };
   },
   computed: {
