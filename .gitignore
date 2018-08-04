@@ -22,3 +22,6 @@ yarn-error.log*
 
 # config javascript file
 zenpress.config.js
+
+# service-worker.js
+service-worker.js

@@ -17,7 +17,7 @@ module.exports = {
     themeColor: "#3498DB",
     msTileColor: "#3498DB",
     workboxOptions: {
-      swSrc: "src/service-worker.js"
+      swSrc: "service-worker.js"
     }
   }
 };
