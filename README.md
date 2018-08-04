@@ -1,5 +1,5 @@
 # ZenPress
-![apple-touch-icon.png](https://i.loli.net/2018/08/03/5b6440ecd4079.png)
+![Logo designed by ZhangZisu](https://i.loli.net/2018/08/04/5b65bebb829a3.png)
 
 [![GitHub tag](https://img.shields.io/github/tag/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
 [![GitHub](https://img.shields.io/github/license/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
