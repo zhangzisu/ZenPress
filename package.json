@@ -1,6 +1,6 @@
 {
   "name": "zenpress",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -17,6 +17,7 @@
     "marked-katex": "^0.3.8",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.17",
+    "vue-disqus": "^3.0.3",
     "vue-gravatar": "^1.2.1",
     "vue-i18n": "^8.0.0",
     "vue-router": "^3.0.1",

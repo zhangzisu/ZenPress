@@ -13,9 +13,11 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import i18n from "./i18n";
 import Gravatar from "vue-gravatar";
+import VueDisqus from "vue-disqus";
 import "./assets/github-markdown.css";
 import "./assets/github.css";
 
+Vue.use(VueDisqus);
 Vue.component("v-gravatar", Gravatar);
 Vue.config.productionTip = false;
 if (store.state.authentication) {
