@@ -96,7 +96,12 @@ export default {
       }
     },
     render(markdown) {
-      return marked(markdown);
+      try {
+        let result = marked(markdown);
+        return result;
+      } catch (e) {
+        return `<pre><code>${e.message}\nSource:\n${markdown}</code></pre>`;
+      }
     },
     formatDate(date) {
       if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
