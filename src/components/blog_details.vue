@@ -42,7 +42,8 @@
 						</div>
 					</v-card-title>
 					<v-card-text>
-						<vue-intense-debate :account="config.intensedebate.account" :pid="unique_id"/>
+						<vue-intense-debate v-if="loaded" :account="config.intensedebate.account" :pid="unique_id"/>
+						<div v-else v-text="$t('wait_text')"/>
 					</v-card-text>
 				</v-card>
 			</v-flex>
@@ -92,7 +93,8 @@ export default {
         tags: [],
         published: null
       },
-      config: config
+      config: config,
+      loaded: false
     };
   },
   computed: {
@@ -112,6 +114,8 @@ export default {
         this.$store.commit("querying", true);
         let result = await axios.get(`/blog/post/${this.post_id}`);
         this.post = result.data;
+        document.title = this.post.title;
+        this.loaded = true;
         this.$store.commit("querying", false);
       } catch (e) {
         this.$store.commit("querying", false);

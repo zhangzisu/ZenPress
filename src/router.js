@@ -6,17 +6,12 @@ import * as components from "./components";
 
 Vue.use(Router);
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: "/",
       name: "home",
       component: views.home
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: views.about
     },
     {
       path: "/blog",
@@ -46,7 +41,8 @@ export default new Router({
         } else {
           next();
         }
-      }
+      },
+      meta: { title: "Login" }
     },
     {
       path: "/admin",
@@ -102,7 +98,8 @@ export default new Router({
           name: "edit_blog",
           component: components.blog_edit
         }
-      ]
+      ],
+      meta: { title: "Administration" }
     },
     {
       path: "*",
@@ -116,3 +113,14 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta && to.meta.title) {
+    document.title = to.meta.title;
+  } else {
+    document.title = store.state.site.title;
+  }
+  next();
+});
+
+export default router;
