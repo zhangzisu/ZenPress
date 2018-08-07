@@ -34,7 +34,7 @@
 					</v-card-actions>
 				</v-card>
 				<br>
-				<v-card>
+				<v-card v-if="config.intensedebate.enabled">
 					<v-card-title primary-title>
 						<div>
 							<div class="headline" v-text="$t('comment')"/>
