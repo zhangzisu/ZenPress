@@ -2,7 +2,7 @@
 	<v-container fluid>
 		<v-layout fill-height>
 			<v-flex :md9="!replaceBlogBar">
-				<router-view/>
+				<router-view :key="$route.fullPath"/>
 				<v-card v-if="replaceBlogBar">
 					<v-card-title primary-title>
 						<div>

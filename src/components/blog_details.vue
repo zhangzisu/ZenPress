@@ -33,6 +33,18 @@
 						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
 					</v-card-actions>
 				</v-card>
+				<br>
+				<v-card>
+					<v-card-title primary-title>
+						<div>
+							<div class="headline" v-text="$t('comment')"/>
+							<div class="subheading" v-text="$t('comment_subheader')"/>
+						</div>
+					</v-card-title>
+					<v-card-text>
+						<vue-intense-debate :account="config.intensedebate.account" :pid="unique_id"/>
+					</v-card-text>
+				</v-card>
 			</v-flex>
 		</v-layout>
 	</v-container>
@@ -46,6 +58,8 @@ import axios from "axios";
 import copy from "copy-to-clipboard";
 import "katex/dist/katex.css";
 import getPostPermalink from "../permalink";
+import config from "../../zenpress.config";
+import VueIntenseDebate from "vue-intense-debate/VueIntenseDebate";
 
 const renderer = new Renderer();
 renderer.code = (code, language) => {
@@ -60,6 +74,9 @@ marked.setOptions({ renderer: renderer, kaTex: katex });
 
 export default {
   name: "blog_details",
+  components: {
+    "vue-intense-debate": VueIntenseDebate
+  },
   props: {
     post_id: String
   },
@@ -74,13 +91,20 @@ export default {
         content: "",
         tags: [],
         published: null
-      }
+      },
+      config: config
     };
   },
   computed: {
     authenticated: function() {
       return !!this.$store.state.authentication;
+    },
+    unique_id: function() {
+      return this.post_id;
     }
+  },
+  created() {
+    this.fetch();
   },
   methods: {
     async fetch() {
@@ -125,14 +149,6 @@ export default {
         this.$store.commit("error_text", this.$t("copy_failed_text"));
       }
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => vm.fetch());
-  },
-  beforeRouteUpdate(to, from, next) {
-    next();
-    this.post_id = to.params.id;
-    this.fetch();
   }
 };
 </script>

@@ -1,6 +1,6 @@
 {
   "name": "zenpress",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -19,6 +19,7 @@
     "vue": "^2.5.17",
     "vue-gravatar": "^1.2.1",
     "vue-i18n": "^8.0.0",
+    "vue-intense-debate": "^0.2.0",
     "vue-router": "^3.0.1",
     "vue2-ace-editor": "0.0.11",
     "vuetify": "^1.1.9",
@@ -26,7 +27,7 @@
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
-    "@babel/polyfill": "^7.0.0-beta.55",
+    "@babel/polyfill": "^7.0.0-beta.56",
     "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.10",
