@@ -60,9 +60,12 @@ import copy from "copy-to-clipboard";
 import "katex/dist/katex.css";
 import getPostPermalink from "../permalink";
 import config from "../../zenpress.config";
+import mermaid from "mermaid";
+mermaid.initialize({});
 
 const renderer = new Renderer();
 renderer.code = (code, language) => {
+  if (language === "mermaid") return `<pre class="mermaid">${code}</pre>`;
   const validLang = !!(language && highlightjs.getLanguage(language));
   const highlighted = validLang
     ? highlightjs.highlight(language, code).value
@@ -139,6 +142,7 @@ export default {
     render(markdown) {
       try {
         let result = marked(markdown);
+        setTimeout(() => mermaid.init(), 50);
         return result;
       } catch (e) {
         return `<pre><code>${e.message}\nSource:\n${markdown}</code></pre>`;

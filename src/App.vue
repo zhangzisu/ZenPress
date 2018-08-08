@@ -120,7 +120,7 @@ export default {
           display_name: "中文"
         }
       ],
-      version: "0.3.1"
+      version: "0.3.2"
     };
   },
   computed: {
