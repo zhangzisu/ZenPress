@@ -42,7 +42,7 @@
 						</div>
 					</v-card-title>
 					<v-card-text>
-						<vue-intense-debate v-if="loaded" :account="config.intensedebate.account" :pid="unique_id"/>
+						<div v-if="loaded" id="comments-container" class="comments-container"/>
 						<div v-else v-text="$t('wait_text')"/>
 					</v-card-text>
 				</v-card>
@@ -60,7 +60,6 @@ import copy from "copy-to-clipboard";
 import "katex/dist/katex.css";
 import getPostPermalink from "../permalink";
 import config from "../../zenpress.config";
-import VueIntenseDebate from "vue-intense-debate/VueIntenseDebate";
 
 const renderer = new Renderer();
 renderer.code = (code, language) => {
@@ -75,9 +74,6 @@ marked.setOptions({ renderer: renderer, kaTex: katex });
 
 export default {
   name: "blog_details",
-  components: {
-    "vue-intense-debate": VueIntenseDebate
-  },
   props: {
     post_id: String
   },
@@ -114,11 +110,28 @@ export default {
         this.$store.commit("querying", true);
         let result = await axios.get(`/blog/post/${this.post_id}`);
         this.post = result.data;
-        document.title = this.post.title;
-        this.loaded = true;
         this.$store.commit("querying", false);
+        this.loadComments();
       } catch (e) {
         this.$store.commit("querying", false);
+        this.$store.commit("error_status", true);
+        this.$store.commit("error_text", e.message);
+      }
+    },
+    async loadComments() {
+      try {
+        let post_id = encodeURIComponent(this.post._id);
+        let title = encodeURIComponent(this.post.title);
+        let url = encodeURIComponent(window.location.href);
+        let s = document.createElement("script");
+        window.idcomments_div = "comments-container";
+        s.type = "text/javascript";
+        s.async = true;
+        // eslint-disable-next-line
+        s.src = `https://intensedebate.com/js/genericCommentWrapper2.php?acct=${config.intensedebate.account}&postid=${post_id}&title=${title}&url=${url}`;
+        this.$el.appendChild(s);
+        this.loaded = true;
+      } catch (e) {
         this.$store.commit("error_status", true);
         this.$store.commit("error_text", e.message);
       }
