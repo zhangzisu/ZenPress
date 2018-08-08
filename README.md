@@ -4,7 +4,8 @@
 
 [![GitHub tag](https://img.shields.io/github/tag/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
 [![GitHub](https://img.shields.io/github/license/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
-<h1 style="color: #2f3542; font-size: 96px; font-family: inconsolata, consolas, monospace"><span style="color: #1e90ff">Zen</span>Press</h1>
+# ZenPress
+
 </div>
 
 ---
