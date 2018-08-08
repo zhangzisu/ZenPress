@@ -15,6 +15,14 @@ import i18n from "./i18n";
 import Gravatar from "vue-gravatar";
 import "./assets/github-markdown.css";
 import "./assets/github.css";
+import VueAnalytics from "vue-analytics";
+
+if (cnf.analytics.enabled) {
+  Vue.use(VueAnalytics, {
+    id: cnf.analytics.id,
+    router
+  });
+}
 
 Vue.component("v-gravatar", Gravatar);
 Vue.config.productionTip = false;

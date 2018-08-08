@@ -111,7 +111,7 @@ export default {
         let result = await axios.get(`/blog/post/${this.post_id}`);
         this.post = result.data;
         this.$store.commit("querying", false);
-        this.loadComments();
+        if (config.intensedebate.enabled) this.loadComments();
       } catch (e) {
         this.$store.commit("querying", false);
         this.$store.commit("error_status", true);
