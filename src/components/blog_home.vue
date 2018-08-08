@@ -93,11 +93,12 @@ export default {
           requestObject.search = this.search;
         if (this.tags && this.tags.length) requestObject.tags = this.tags;
 
+        let count = await axios.post("/blog/count", requestObject);
+        this.resultCount = count.data.count;
+
         let result = await axios.post("/blog", requestObject);
         result.data.forEach(x => this.$store.commit("addTags", x.tags));
         this.posts = result.data;
-        result = await axios.post("/blog/count", requestObject);
-        this.resultCount = result.data.count;
 
         this.$store.commit("querying", false);
       } catch (e) {
