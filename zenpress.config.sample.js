@@ -5,5 +5,9 @@ export default {
   intensedebate: {
     enabled: true,
     account: "xxx"
+  },
+  analytics: {
+    enabled: true,
+    id: "UA-xxx-yyy"
   }
 };
