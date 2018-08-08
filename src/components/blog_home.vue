@@ -24,7 +24,8 @@
 					<v-card-actions>
 						{{ formatDate(post.published) }}
 						<v-spacer/>
-						<v-btn depressed @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
+						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
+						<v-btn depressed color="primary" @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
 					</v-card-actions>
 				</v-card>
 				<v-card flat style="background: transparent">
@@ -71,7 +72,9 @@ export default {
     };
   },
   computed: {
-    //
+    authenticated: function() {
+      return !!this.$store.state.authentication;
+    }
   },
   methods: {
     async fetchPost() {
