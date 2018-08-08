@@ -63,11 +63,13 @@ marked.setOptions({ renderer: renderer, kaTex: katex });
 
 export default {
   name: "blog_home",
+  props: {
+    search: String,
+    tags: Array
+  },
   data() {
     return {
       posts: [],
-      search: "",
-      tags: [],
       resultCount: 0
     };
   },
@@ -75,6 +77,9 @@ export default {
     authenticated: function() {
       return !!this.$store.state.authentication;
     }
+  },
+  created() {
+    this.fetchPost();
   },
   methods: {
     async fetchPost() {
@@ -137,29 +142,6 @@ export default {
     render(markdown) {
       return marked(markdown);
     }
-  },
-  beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.search = "";
-      vm.tags = [];
-      if (to.query.q) {
-        let parsed = JSON.parse(decodeURIComponent(to.query.q));
-        vm.search = parsed.search;
-        vm.tags = parsed.tags;
-      }
-      vm.fetchPost();
-    });
-  },
-  beforeRouteUpdate(to, from, next) {
-    next();
-    this.search = "";
-    this.tags = [];
-    if (to.query.q) {
-      let parsed = JSON.parse(decodeURIComponent(to.query.q));
-      this.search = parsed.search;
-      this.tags = parsed.tags;
-    }
-    this.fetchPost();
   }
 };
 </script>

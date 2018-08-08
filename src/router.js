@@ -20,7 +20,12 @@ let router = new Router({
         {
           path: "",
           name: "blog",
-          component: components.blog_home
+          component: components.blog_home,
+          props: function(route) {
+            if (route.query.q)
+              return JSON.parse(decodeURIComponent(route.query.q));
+            return { search: "", tags: [] };
+          }
         },
         {
           path: ":id",
