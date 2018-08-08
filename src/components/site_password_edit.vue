@@ -11,7 +11,7 @@
 							</div>
 						</v-card-title>
 						<v-card-text>
-							<v-text-field v-model="password" :rules="[notEmpty]" :label="$t('site_password')"/>
+							<v-text-field v-model="password" :rules="[notEmpty]" :label="$t('site_password')" type="password"/>
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer/>
