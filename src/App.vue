@@ -153,6 +153,12 @@ export default {
   created() {
     this.$store.commit("init");
     this.$store.dispatch("loadSite");
+    for (let language of navigator.languages) {
+      if (this.languages.filter(x => x.name === language).length) {
+        this.$i18n.locale = language;
+        break;
+      }
+    }
   },
   methods: {
     toggle_admin() {
