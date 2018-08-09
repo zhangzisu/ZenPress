@@ -183,7 +183,7 @@ pre, code
   margin: 0
   box-shadow: none
   background: transparent
-  font-family: 'Inconsolata', monospace
+  font-family: 'Inconsolata', 'consolas', monospace
   font-weight: 300
   font-size: 15px
   line-height: 1.55
@@ -199,4 +199,7 @@ code
   white-space: pre-wrap
   &:before
     display: none
+#idc-container
+  margin-left: auto !important;
+  margin-right: auto !important;
 </style>
