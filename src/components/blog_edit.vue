@@ -96,7 +96,7 @@ export default {
   watch: {
     dialog(val) {
       if (val) {
-        this.time = new Date(this.post.published).toLocaleString();
+        this.time = new Date(this.post.published).toString();
       }
     },
     $route(to) {
