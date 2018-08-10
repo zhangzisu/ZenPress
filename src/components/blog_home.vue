@@ -93,6 +93,8 @@ export default {
           requestObject.search = this.search;
         if (this.tags && this.tags.length) requestObject.tags = this.tags;
 
+        requestObject.end = +new Date();
+
         let count = await axios.post("/blog/count", requestObject);
         this.resultCount = count.data.count;
 
