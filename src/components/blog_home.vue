@@ -65,7 +65,9 @@ export default {
   name: "blog_home",
   props: {
     search: String,
-    tags: Array
+    tags: Array,
+    start: Number,
+    end: Number
   },
   data() {
     return {
@@ -93,7 +95,15 @@ export default {
           requestObject.search = this.search;
         if (this.tags && this.tags.length) requestObject.tags = this.tags;
 
-        requestObject.end = +new Date();
+        if (this.start && parseInt(this.start)) {
+          requestObject.start = parseInt(this.start);
+        }
+
+        if (this.end && parseInt(this.end)) {
+          requestObject.end = parseInt(this.end);
+        } else {
+          requestObject.end = +new Date();
+        }
 
         let count = await axios.post("/blog/count", requestObject);
         this.resultCount = count.data.count;
