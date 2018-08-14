@@ -113,6 +113,7 @@ export default {
         this.$store.commit("querying", true);
         let result = await axios.get(`/blog/post/${this.post_id}`);
         this.post = result.data;
+        document.title = this.post.title;
         this.$store.commit("querying", false);
         if (config.intensedebate.enabled) this.loadComments();
       } catch (e) {
