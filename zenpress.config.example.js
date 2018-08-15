@@ -9,5 +9,11 @@ export default {
   analytics: {
     enabled: true,
     id: "UA-xxx-yyy"
+  },
+  music: {
+    enabled: true,
+    server: "tencent",
+    type: "playlist",
+    id: "3996270102"
   }
 };

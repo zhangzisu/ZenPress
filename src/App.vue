@@ -90,17 +90,22 @@
 			</v-snackbar>
 		</v-content>
 
-		<v-footer class="pa-3">
-			<div><a href="https://github.com/ZhangZisu/ZenPress" target="_blank">ZenPress</a>&nbsp;{{ version }}&nbsp;</div>
-			<a @click="clearTagCache" v-text="$t('clear_tag_cache')"/>
+		<v-footer class="pa-3" height="auto">
+			<div id="music_player"/>
 			<v-spacer/>
-			<div>&copy;&nbsp;{{ site.owner.name }}&nbsp;{{ new Date().getFullYear() }}</div>
+			<div class="text-align:end">&copy;{{ site.owner.name }}, {{ new Date().getFullYear() }}<br>
+				<a href="https://github.com/ZhangZisu/ZenPress" target="_blank">ZenPress</a>&nbsp;{{ version }}<br>
+				<a href="/" @click="clearTagCache" v-text="$t('clear_tag_cache')"/>
+			</div>
 		</v-footer>
 	</v-app>
 </template>
 
 <script>
 import admin_drawer_content from "./menus/admin_drawer";
+import config from "../zenpress.config";
+import "aplayer/dist/APlayer.min.css";
+import APlayer from "aplayer";
 
 export default {
   name: "App",
@@ -120,7 +125,7 @@ export default {
           display_name: "中文"
         }
       ],
-      version: "0.3.7"
+      version: "0.3.8"
     };
   },
   computed: {
@@ -158,6 +163,37 @@ export default {
         this.$i18n.locale = language;
         break;
       }
+    }
+    if (config.music.enabled) {
+      let url =
+        config.music.meting_addr ||
+        "https://api.i-meto.com/meting/api?server=:server&type=:type&id=:id&r=:r";
+      url = url.replace(":server", config.music.server);
+      url = url.replace(":type", config.music.type);
+      url = url.replace(":id", config.music.id);
+      url = url.replace(":r", Math.random());
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+            let response = JSON.parse(xhr.responseText);
+            if (response.length) {
+              new APlayer({
+                container: document.getElementById("music_player"),
+                audio: response,
+                lrcType: response[0].lrc ? 3 : 0,
+                storageName: "meting_zenpress",
+                loop: "all",
+                order: "list",
+                preload: "auto",
+                listFolded: true
+              });
+            }
+          }
+        }
+      };
+      xhr.open("get", url, true);
+      xhr.send(null);
     }
   },
   methods: {
