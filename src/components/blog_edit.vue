@@ -188,11 +188,11 @@ export default {
 };
 </script>
 
-<style>
-.ace_gutter {
+<style lang="stylus">
+.ace_gutter
   z-index: 1 !important;
-}
-.ace_scrollbar {
+.ace_scrollbar
   z-index: 1 !important;
-}
+.ace_cursor
+  z-index: 1 !important;
 </style>
