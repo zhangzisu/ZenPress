@@ -52,28 +52,11 @@
 </template>
 
 <script>
-import katex from "katex";
-import marked, { Renderer } from "marked-katex";
-import highlightjs from "highlight.js";
 import axios from "axios";
 import copy from "copy-to-clipboard";
-import "katex/dist/katex.css";
 import getPostPermalink from "../permalink";
 import config from "../../zenpress.config";
-import mermaid from "mermaid";
-mermaid.initialize({});
-
-const renderer = new Renderer();
-renderer.code = (code, language) => {
-  if (language === "mermaid") return `<pre class="mermaid">${code}</pre>`;
-  const validLang = !!(language && highlightjs.getLanguage(language));
-  const highlighted = validLang
-    ? highlightjs.highlight(language, code).value
-    : code;
-  return `<pre><code class="hljs ${language}">${highlighted}</code></pre>`;
-};
-
-marked.setOptions({ renderer: renderer, kaTex: katex });
+import render from "../markdown";
 
 export default {
   name: "blog_details",
@@ -140,15 +123,7 @@ export default {
         this.$store.commit("error_text", e.message);
       }
     },
-    render(markdown) {
-      try {
-        let result = marked(markdown);
-        setTimeout(() => mermaid.init(), 50);
-        return result;
-      } catch (e) {
-        return `<pre><code>${e.message}\nSource:\n${markdown}</code></pre>`;
-      }
-    },
+    render: render,
     formatDate(date) {
       if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
       return this.$t("published_at") + ": " + new Date(date).toLocaleString();
