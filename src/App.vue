@@ -125,7 +125,7 @@ export default {
           display_name: "中文"
         }
       ],
-      version: "0.3.8"
+      version: "0.3.9"
     };
   },
   computed: {
