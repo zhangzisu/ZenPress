@@ -104,6 +104,7 @@ export default {
     doClear() {
       this.form.search = "";
       this.form.tags = [];
+      this.form.SpecifyDate = false;
       this.$router.push({ name: "blog" });
     },
     notEmpty(str) {
