@@ -48,19 +48,62 @@
 							</v-dialog>
 							<v-spacer/>
 							<v-btn v-if="post_id" depressed @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('view')"/>
-							<v-btn depressed color="secondary" @click.stop="$router.go(-1)" v-text="$t('cancel')"/>
+							<v-btn color="secondary" depressed @click.stop="showPreview = true" v-text="$t('preview')"/>
+							<v-btn depressed color="warning" @click.stop="$router.go(-1)" v-text="$t('cancel')"/>
 							<v-btn depressed color="primary" @click.stop="submit" v-text="$t('submit')"/>
 						</v-card-actions>
 					</v-card>
 				</v-form>
 			</v-flex>
 		</v-layout>
+		<v-dialog v-model="showPreview" fullscreen hide-overlay transition="dialog-bottom-transition">
+			<v-card>
+				<v-toolbar dark color="primary">
+					<v-btn icon dark @click.native="showPreview = false">
+						<v-icon>close</v-icon>
+					</v-btn>
+					<v-toolbar-title>Preview</v-toolbar-title>
+				</v-toolbar>
+				<v-card>
+					<v-card-media v-if="post.header_media" :src="post.header_media" height="200px"/>
+					<v-card-title primary-title>
+						<div>
+							<div class="headline">{{ post.title }}</div>
+							<div class="subheading">{{ post.subtitle }}</div>
+						</div>
+					</v-card-title>
+					<v-card-text>
+						<div class="markdown-body" v-html="render(post.summary)"/>
+					</v-card-text>
+					<v-divider/>
+					<v-card-text>
+						<article class="markdown-body" v-html="render(post.content)"/>
+					</v-card-text>
+					<v-divider/>
+					<v-card-text>
+						<div>
+							<v-chip v-for="(tag, i) in post.tags" :key="`tag${i}`" label @click.stop="copyText(tag)">
+								<v-icon left>label</v-icon>
+								{{ tag }}
+							</v-chip>
+						</div>
+					</v-card-text>
+					<v-card-actions>
+						{{ formatDate(post.published) }}
+						<v-spacer/>
+						<v-btn depressed color="primary" @click.stop="share" v-text="$t('share')"/>
+						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
+					</v-card-actions>
+				</v-card>
+			</v-card>
+		</v-dialog>
 	</v-container>
 </template>
 
 <script>
 import axios from "axios";
 import Editor from "vue2-ace-editor";
+import render from "../markdown";
 
 export default {
   name: "blog_edit",
@@ -85,6 +128,7 @@ export default {
       },
       valid: false,
       dialog: false,
+      showPreview: false,
       time: null
     };
   },
@@ -141,6 +185,7 @@ export default {
         this.$store.commit("error_text", e.message);
       }
     },
+    render: render,
     formatDate(date) {
       if (date === Number.MAX_SAFE_INTEGER) return this.$t("unpublished");
       return this.$t("published_at") + ": " + new Date(date).toLocaleString();
@@ -195,4 +240,32 @@ export default {
   z-index: 1 !important;
 .ace_cursor
   z-index: 1 !important;
+
+.markdown-body
+  box-shadow: none
+  overflow-x: auto
+  overflow-y: hidden
+pre, code
+  margin: 0
+  box-shadow: none
+  background: transparent
+  font-family: 'Inconsolata', 'consolas', monospace
+  font-weight: 300
+  font-size: 15px
+  line-height: 1.55
+code
+  position: relative
+  box-shadow: none
+  overflow-x: auto
+  overflow-y: hidden
+  word-break: break-word
+  flex-wrap: wrap
+  align-items: center
+  vertical-align: middle
+  white-space: pre-wrap
+  &:before
+    display: none
+#idc-container
+  margin-left: auto !important;
+  margin-right: auto !important;
 </style>
