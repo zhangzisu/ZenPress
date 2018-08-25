@@ -1,5 +1,7 @@
+// Async part
+const admin = () => import(/* webpackChunkName: "group-admin" */ "./admin.vue");
+// Sync part
 import about from "./about.vue";
-import admin from "./admin.vue";
 import blog from "./blog.vue";
 import error from "./error.vue";
 import home from "./home.vue";

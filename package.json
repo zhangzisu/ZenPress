@@ -1,6 +1,6 @@
 {
   "name": "zenpress",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -29,7 +29,7 @@
     "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
-    "@babel/polyfill": "^7.0.0-beta.56",
+    "@babel/polyfill": "^7.0.0-rc.3",
     "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.0.0-rc.10",
     "@vue/cli-plugin-eslint": "^3.0.0-rc.10",

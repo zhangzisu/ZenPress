@@ -1,14 +1,24 @@
-import admin_home from "./admin_home.vue";
+// Async part
+const admin_home = () =>
+  import(/* webpackChunkName: "group-admin" */ "./admin_home.vue");
+const blog_edit = () =>
+  import(/* webpackChunkName: "group-admin" */ "./blog_edit.vue");
+const site_info_edit = () =>
+  import(/* webpackChunkName: "group-admin" */ "./site_info_edit.vue");
+const site_menu_edit = () =>
+  import(/* webpackChunkName: "group-admin" */ "./site_menu_edit.vue");
+const site_owner_edit = () =>
+  import(/* webpackChunkName: "group-admin" */ "./site_owner_edit.vue");
+const site_password_edit = () =>
+  import(/* webpackChunkName: "group-admin" */ "./site_password_edit.vue");
+const site_statistics = () =>
+  import(/* webpackChunkName: "group-admin" */ "./site_statistics.vue");
+
+// Sync part
 import blog_details from "./blog_details.vue";
-import blog_edit from "./blog_edit.vue";
 import blog_home from "./blog_home.vue";
 import blog_list from "./blog_list.vue";
 import logout from "./logout.vue";
-import site_info_edit from "./site_info_edit.vue";
-import site_menu_edit from "./site_menu_edit.vue";
-import site_owner_edit from "./site_owner_edit.vue";
-import site_password_edit from "./site_password_edit.vue";
-import site_statistics from "./site_statistics.vue";
 
 export {
   admin_home,
