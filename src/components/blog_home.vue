@@ -24,8 +24,8 @@
 					<v-card-actions>
 						{{ formatDate(post.published) }}
 						<v-spacer/>
-						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
-						<v-btn depressed color="primary" @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
+						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" @click.middle="window.open(`/admin/blog/edit/${post._id}`, '_blank')" v-text="$t('edit')"/>
+						<v-btn depressed color="primary" @click.stop="$router.push(`/blog/${post._id}`)" @click.middle="window.open(`/blog/${post._id}`, '_blank')" v-text="$t('read_more')" />
 					</v-card-actions>
 				</v-card>
 				<v-card flat style="background: transparent">
@@ -58,7 +58,8 @@ export default {
   data() {
     return {
       posts: [],
-      resultCount: 0
+      resultCount: 0,
+      window: window
     };
   },
   computed: {

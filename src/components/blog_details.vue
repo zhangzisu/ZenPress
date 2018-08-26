@@ -30,7 +30,7 @@
 						{{ formatDate(post.published) }}
 						<v-spacer/>
 						<v-btn depressed color="primary" @click.stop="share" v-text="$t('share')"/>
-						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
+						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" @click.middle="window.open(`/admin/blog/edit/${post._id}`, '_blank')" v-text="$t('edit')"/>
 					</v-card-actions>
 				</v-card>
 				<br>
@@ -76,7 +76,8 @@ export default {
         published: null
       },
       config: config,
-      loaded: false
+      loaded: false,
+      window: window
     };
   },
   computed: {

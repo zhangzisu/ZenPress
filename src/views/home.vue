@@ -25,7 +25,7 @@
 						<v-card-actions>
 							{{ formatDate(post.published) }}
 							<v-spacer/>
-							<v-btn depressed @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('read_more')" />
+							<v-btn depressed @click.stop="$router.push(`/blog/${post._id}`)" @click.middle="window.open(`/blog/${post._id}`, '_blank')" v-text="$t('read_more')" />
 						</v-card-actions>
 					</v-card>
 				</v-flex>
@@ -43,7 +43,8 @@ export default {
   name: "home",
   data() {
     return {
-      posts: []
+      posts: [],
+      window: window
     };
   },
   methods: {

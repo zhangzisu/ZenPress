@@ -10,7 +10,7 @@
 							<td>{{ formatDate(props.item.published) }}</td>
 							<td>{{ props.item.tags.join(',') }}</td>
 							<td class="justify-end layout px-0">
-								<v-btn icon @click.stop="$router.push(`/admin/blog/edit/${props.item._id}`)">
+								<v-btn icon @click.stop="$router.push(`/admin/blog/edit/${props.item._id}`)" @click.middle="window.open(`/admin/blog/edit/${props.item._id}`, '_blank')">
 									<v-icon>edit</v-icon>
 								</v-btn>
 								<v-btn icon @click.stop="deletePost(props.item._id)">
@@ -42,7 +42,8 @@ export default {
         { text: "Actions", sortable: false, align: "right", width: "128px" }
       ],
       pagination: { sortBy: "published", descending: true },
-      posts: []
+      posts: [],
+      window: window
     };
   },
   methods: {

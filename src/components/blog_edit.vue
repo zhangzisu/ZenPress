@@ -47,7 +47,7 @@
 								</v-card>
 							</v-dialog>
 							<v-spacer/>
-							<v-btn v-if="post_id" depressed @click.stop="$router.push(`/blog/${post._id}`)" v-text="$t('view')"/>
+							<v-btn v-if="post_id" depressed @click.stop="$router.push(`/blog/${post._id}`)" @click.middle="window.open(`/blog/${post._id}`, '_blank')" v-text="$t('view')"/>
 							<v-btn color="secondary" depressed @click.stop="showPreview = true" v-text="$t('preview')"/>
 							<v-btn depressed color="warning" @click.stop="$router.go(-1)" v-text="$t('cancel')"/>
 							<v-btn depressed color="primary" @click.stop="submit" v-text="$t('submit')"/>
@@ -92,7 +92,7 @@
 						{{ formatDate(post.published) }}
 						<v-spacer/>
 						<v-btn depressed color="primary" @click.stop="share" v-text="$t('share')"/>
-						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" v-text="$t('edit')"/>
+						<v-btn v-if="authenticated" depressed @click.stop="$router.push(`/admin/blog/edit/${post._id}`)" @click.middle="window.open(`/admin/blog/edit/${post._id}`, '_blank');" v-text="$t('edit')"/>
 					</v-card-actions>
 				</v-card>
 			</v-card>
@@ -129,7 +129,8 @@ export default {
       valid: false,
       dialog: false,
       showPreview: false,
-      time: null
+      time: null,
+      window: window
     };
   },
   computed: {
