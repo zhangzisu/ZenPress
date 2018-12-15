@@ -5,7 +5,7 @@
 [![GitHub tag](https://img.shields.io/github/tag/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
 [![GitHub release](https://img.shields.io/github/release/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
 [![GitHub](https://img.shields.io/github/license/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
-[![GitHub last commit](https://img.shields.io/github/last-commit/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress)
+[![GitHub last commit](https://img.shields.io/github/last-commit/ZhangZisu/ZenPress.svg?style=flat-square)](https://github.com/ZhangZisu/ZenPress) [![Greenkeeper badge](https://badges.greenkeeper.io/ZhangZisu/ZenPress.svg)](https://greenkeeper.io/)
 
 
 # ZenPress
